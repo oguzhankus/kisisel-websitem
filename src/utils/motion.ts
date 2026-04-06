@@ -1,7 +1,7 @@
 import type { TMotion } from "../types";
 import { Variants } from "framer-motion";
 
-export const textVariant = () => {
+export const textVariant = (delay?: number) => {
   return {
     hidden: {
       y: -50,
@@ -13,6 +13,7 @@ export const textVariant = () => {
       transition: {
         type: "spring",
         duration: 1.25,
+        delay,
       },
     },
   };
@@ -85,6 +86,21 @@ export const slideIn = (
         delay,
         duration,
         ease: "easeOut",
+      },
+    },
+  };
+};
+
+export const staggerContainer = (
+  staggerChildren?: number,
+  delayChildren?: number
+) => {
+  return {
+    hidden: {},
+    show: {
+      transition: {
+        staggerChildren,
+        delayChildren: delayChildren || 0,
       },
     },
   };

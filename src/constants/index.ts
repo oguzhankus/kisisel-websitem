@@ -3,272 +3,183 @@ import type {
   TService,
   TTechnology,
   TExperience,
-  TTestimonial,
   TProject,
 } from "../types";
 
 import {
-  mobile,
-  backend,
   creator,
   web,
   javascript,
-  typescript,
   html,
   css,
-  reactjs,
-  redux,
-  tailwind,
-  nodejs,
-  mongodb,
-  git,
-  figma,
-  docker,
-  meta,
-  starbucks,
-  tesla,
-  shopify,
-  carrent,
-  jobit,
-  tripguide,
-  threejs,
+  csharp,
+  banuyazilimToplulugu,
+  portfolioWebsite,
 } from "../assets";
 
-export const navLinks: TNavLink[] = [
-  {
-    id: "about",
-    title: "About",
-  },
-  {
-    id: "work",
-    title: "Work",
-  },
-  {
-    id: "contact",
-    title: "Contact",
-  },
-];
+const tr: {
+  navLinks: TNavLink[];
+  services: TService[];
+  experiences: TExperience[];
+  projects: TProject[];
+} = {
+  navLinks: [
+    {
+      id: "about",
+      title: "Hakkımda",
+    },
+    {
+      id: "work",
+      title: "Deneyimler",
+    },
+    {
+      id: "contact",
+      title: "İletişim",
+    },
+  ],
+  services: [
+    {
+      title: "Yazılım Mühendisliği · 1. Sınıf",
+      icon: web,
+      description:
+        "Bandırma Onyedi Eylül Üniversitesi Yazılım Mühendisliği’nde temel bilgisayar bilimi ve mühendislik disiplinini akademik çerçevede ilerletiyorum.",
+    },
+    {
+      title: "Grafik Tasarım Koordinatörü",
+      icon: creator,
+      description:
+        "BANÜ Yazılım Mühendisliği Topluluğu’nda etkinlik ve iletişim görsellerini üstlenerek markayı net, modern ve tutarlı tutuyorum.",
+    },
+  ],
+  experiences: [
+    {
+      title: "Grafik Tasarım Koordinatörü",
+      companyName: "BANÜ Yazılım Mühendisliği Topluluğu",
+      icon: banuyazilimToplulugu,
+      iconBg: "linear-gradient(135deg, #0ea5e9 0%, #1e3a8a 100%)",
+      date: "Aralık 2025 - Devam ediyor",
+      points: [
+        "Etkinlik afişleri, sosyal medya görselleri ve dijital duyurular için tutarlı bir görsel dil oluşturma.",
+        "Topluluğun marka kimliğini güçlendiren şablonlar ve kampanya görselleri üretme.",
+        "Ekip içi görsel ihtiyaçları koordine ederek iletişimin hem hızlı hem profesyonel kalmasını sağlama.",
+      ],
+    },
+  ],
+  projects: [
+    {
+      name: "Kişisel Portföy Websitesi",
+      description:
+        "React, Three.js ve Tailwind CSS ile sıfırdan geliştirdiğim, 3D bilgisayar modeli, glassmorphism tasarım ve modern animasyonlar içeren kişisel portföy websitem.",
+      tags: [
+        {
+          name: "react",
+          color: "blue-text-gradient",
+        },
+        {
+          name: "threejs",
+          color: "green-text-gradient",
+        },
+        {
+          name: "tailwind",
+          color: "pink-text-gradient",
+        },
+      ],
+      image: portfolioWebsite,
+      sourceCodeLink: "https://github.com/oguzhankus",
+    },
+  ],
+};
 
-const services: TService[] = [
-  {
-    title: "Web Developer",
-    icon: web,
-  },
-  {
-    title: "React Native Developer",
-    icon: mobile,
-  },
-  {
-    title: "Backend Developer",
-    icon: backend,
-  },
-  {
-    title: "Content Creator",
-    icon: creator,
-  },
-];
+const en: {
+  navLinks: TNavLink[];
+  services: TService[];
+  experiences: TExperience[];
+  projects: TProject[];
+} = {
+  navLinks: [
+    {
+      id: "about",
+      title: "About",
+    },
+    {
+      id: "work",
+      title: "Experience",
+    },
+    {
+      id: "contact",
+      title: "Contact",
+    },
+  ],
+  services: [
+    {
+      title: "Software Eng. · 1st Year",
+      icon: web,
+      description:
+        "Advancing my fundamentals in computer science and engineering disciplines within the academic framework of Bandırma Onyedi Eylül University.",
+    },
+    {
+      title: "Graphic Design Coordinator",
+      icon: creator,
+      description:
+        "Overseeing event and communication visuals at BANÜ Software Engineering Society to maintain a clear, modern, and consistent brand voice.",
+    },
+  ],
+  experiences: [
+    {
+      title: "Graphic Design Coordinator",
+      companyName: "BANÜ Software Engineering Society",
+      icon: banuyazilimToplulugu,
+      iconBg: "linear-gradient(135deg, #0ea5e9 0%, #1e3a8a 100%)",
+      date: "December 2025 - Present",
+      points: [
+        "Developing a cohesive visual language for promotional materials, social media content, and digital announcements.",
+        "Crafting brand identity templates and campaign visuals to strengthen the society's digital presence.",
+        "Coordinating cross-team design requirements to maintain fast and professional communication standards.",
+      ],
+    },
+  ],
+  projects: [
+    {
+      name: "Personal 3D Portfolio",
+      description:
+        "A high-performance personal portfolio developed from the ground up using React, Three.js, and Tailwind CSS. Features an interactive 3D workstation model, glassmorphism UI/UX, and smooth motion-based transitions.",
+      tags: [
+        {
+          name: "react",
+          color: "blue-text-gradient",
+        },
+        {
+          name: "threejs",
+          color: "green-text-gradient",
+        },
+        {
+          name: "tailwind",
+          color: "pink-text-gradient",
+        },
+      ],
+      image: portfolioWebsite,
+      sourceCodeLink: "https://github.com/oguzhankus",
+    },
+  ],
+};
 
-const technologies: TTechnology[] = [
-  {
-    name: "HTML 5",
-    icon: html,
-  },
-  {
-    name: "CSS 3",
-    icon: css,
-  },
+export const technologies: TTechnology[] = [
   {
     name: "JavaScript",
     icon: javascript,
   },
   {
-    name: "TypeScript",
-    icon: typescript,
+    name: "HTML",
+    icon: html,
   },
   {
-    name: "React JS",
-    icon: reactjs,
+    name: "CSS",
+    icon: css,
   },
   {
-    name: "Redux Toolkit",
-    icon: redux,
-  },
-  {
-    name: "Tailwind CSS",
-    icon: tailwind,
-  },
-  {
-    name: "Node JS",
-    icon: nodejs,
-  },
-  {
-    name: "MongoDB",
-    icon: mongodb,
-  },
-  {
-    name: "Three JS",
-    icon: threejs,
-  },
-  {
-    name: "git",
-    icon: git,
-  },
-  {
-    name: "figma",
-    icon: figma,
-  },
-  {
-    name: "docker",
-    icon: docker,
+    name: "C#",
+    icon: csharp,
   },
 ];
 
-const experiences: TExperience[] = [
-  {
-    title: "React.js Developer",
-    companyName: "Starbucks",
-    icon: starbucks,
-    iconBg: "#383E56",
-    date: "March 2020 - April 2021",
-    points: [
-      "Developing and maintaining web applications using React.js and other related technologies.",
-      "Collaborating with cross-functional teams including designers, product managers, and other developers to create high-quality products.",
-      "Implementing responsive design and ensuring cross-browser compatibility.",
-      "Participating in code reviews and providing constructive feedback to other developers.",
-    ],
-  },
-  {
-    title: "React Native Developer",
-    companyName: "Tesla",
-    icon: tesla,
-    iconBg: "#E6DEDD",
-    date: "Jan 2021 - Feb 2022",
-    points: [
-      "Developing and maintaining web applications using React.js and other related technologies.",
-      "Collaborating with cross-functional teams including designers, product managers, and other developers to create high-quality products.",
-      "Implementing responsive design and ensuring cross-browser compatibility.",
-      "Participating in code reviews and providing constructive feedback to other developers.",
-    ],
-  },
-  {
-    title: "Web Developer",
-    companyName: "Shopify",
-    icon: shopify,
-    iconBg: "#383E56",
-    date: "Jan 2022 - Jan 2023",
-    points: [
-      "Developing and maintaining web applications using React.js and other related technologies.",
-      "Collaborating with cross-functional teams including designers, product managers, and other developers to create high-quality products.",
-      "Implementing responsive design and ensuring cross-browser compatibility.",
-      "Participating in code reviews and providing constructive feedback to other developers.",
-    ],
-  },
-  {
-    title: "Full stack Developer",
-    companyName: "Meta",
-    icon: meta,
-    iconBg: "#E6DEDD",
-    date: "Jan 2023 - Present",
-    points: [
-      "Developing and maintaining web applications using React.js and other related technologies.",
-      "Collaborating with cross-functional teams including designers, product managers, and other developers to create high-quality products.",
-      "Implementing responsive design and ensuring cross-browser compatibility.",
-      "Participating in code reviews and providing constructive feedback to other developers.",
-    ],
-  },
-];
-
-const testimonials: TTestimonial[] = [
-  {
-    testimonial:
-      "I thought it was impossible to make a website as beautiful as our product, but Rick proved me wrong.",
-    name: "Sara Lee",
-    designation: "CFO",
-    company: "Acme Co",
-    image: "https://randomuser.me/api/portraits/women/4.jpg",
-  },
-  {
-    testimonial:
-      "I've never met a web developer who truly cares about their clients' success like Rick does.",
-    name: "Chris Brown",
-    designation: "COO",
-    company: "DEF Corp",
-    image: "https://randomuser.me/api/portraits/men/5.jpg",
-  },
-  {
-    testimonial:
-      "After Rick optimized our website, our traffic increased by 50%. We can't thank them enough!",
-    name: "Lisa Wang",
-    designation: "CTO",
-    company: "456 Enterprises",
-    image: "https://randomuser.me/api/portraits/women/6.jpg",
-  },
-];
-
-const projects: TProject[] = [
-  {
-    name: "Car Rent",
-    description:
-      "Web-based platform that allows users to search, book, and manage car rentals from various providers, providing a convenient and efficient solution for transportation needs.",
-    tags: [
-      {
-        name: "react",
-        color: "blue-text-gradient",
-      },
-      {
-        name: "mongodb",
-        color: "green-text-gradient",
-      },
-      {
-        name: "tailwind",
-        color: "pink-text-gradient",
-      },
-    ],
-    image: carrent,
-    sourceCodeLink: "https://github.com/",
-  },
-  {
-    name: "Job IT",
-    description:
-      "Web application that enables users to search for job openings, view estimated salary ranges for positions, and locate available jobs based on their current location.",
-    tags: [
-      {
-        name: "react",
-        color: "blue-text-gradient",
-      },
-      {
-        name: "restapi",
-        color: "green-text-gradient",
-      },
-      {
-        name: "scss",
-        color: "pink-text-gradient",
-      },
-    ],
-    image: jobit,
-    sourceCodeLink: "https://github.com/",
-  },
-  {
-    name: "Trip Guide",
-    description:
-      "A comprehensive travel booking platform that allows users to book flights, hotels, and rental cars, and offers curated recommendations for popular destinations.",
-    tags: [
-      {
-        name: "nextjs",
-        color: "blue-text-gradient",
-      },
-      {
-        name: "supabase",
-        color: "green-text-gradient",
-      },
-      {
-        name: "css",
-        color: "pink-text-gradient",
-      },
-    ],
-    image: tripguide,
-    sourceCodeLink: "https://github.com/",
-  },
-];
-
-export { services, technologies, experiences, testimonials, projects };
+export const content = { tr, en };
