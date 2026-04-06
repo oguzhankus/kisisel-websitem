@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 
 import { styles } from "../../constants/styles";
 import { ComputersCanvas } from "../canvas";
@@ -12,6 +13,37 @@ const heroTechStrip = [
   { value: "CSS", label: "Stil, düzen, responsive" },
   { value: "C#", label: "Nesne yönelimli programlama" },
 ];
+
+// Ambient Particles Component for Depth
+const AmbientParticles = () => {
+  return (
+    <div className="absolute inset-0 z-0 pointer-events-none opacity-20 overflow-hidden">
+      {[...Array(20)].map((_, i) => (
+        <motion.div
+          key={i}
+          initial={{ 
+            x: Math.random() * window.innerWidth, 
+            y: Math.random() * window.innerHeight,
+            scale: Math.random() * 0.5 + 0.5,
+            opacity: Math.random() * 0.5
+          }}
+          animate={{ 
+            y: [null, Math.random() * -100 - 50],
+            opacity: [0, 0.8, 0],
+            scale: [0.5, 1.2, 0.5]
+          }}
+          transition={{
+            duration: Math.random() * 5 + 5,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: Math.random() * 5
+          }}
+          className="absolute h-1 w-1 bg-cyan-400 rounded-full blur-[1px] shadow-[0_0_8px_#22d3ee]"
+        />
+      ))}
+    </div>
+  );
+};
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -38,6 +70,18 @@ const itemVariants = {
 const Hero = () => {
   const { language } = useLanguage();
   const t = config[language];
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePos({ 
+        x: (e.clientX / window.innerWidth - 0.5) * 20, 
+        y: (e.clientY / window.innerHeight - 0.5) * 20 
+      });
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
 
   const heroTechLabels: Record<string, string> = {
     JavaScript: language === "tr" ? "Dinamik davranış & mantık" : "Dynamic behavior & logic",
@@ -48,14 +92,22 @@ const Hero = () => {
 
   return (
     <section className="relative isolate min-h-[100svh] w-full overflow-x-hidden pb-20 sm:pb-24">
+      {/* Ambient Depth Layer */}
+      <AmbientParticles />
+      
       {/* Dynamic Background Decor */}
       <DigitalShards />
       <CyberPedestal />
 
-      <div
+      <motion.div
+        animate={{ 
+          x: mousePos.x * -0.5,
+          y: mousePos.y * -0.5
+        }}
         className="hero-gradient-layer pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(ellipse_120%_80%_at_0%_-20%,rgba(145,94,255,0.22),transparent_50%),radial-gradient(ellipse_90%_60%_at_100%_0%,rgba(6,182,212,0.12),transparent_45%),radial-gradient(circle_at_70%_80%,rgba(91,33,182,0.18),transparent_40%)] transition-opacity duration-300"
         aria-hidden
       />
+      
       {/* Cinematic Vignette */}
       <div className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(5,5,16,0.4)_70%,rgba(5,5,16,0.8)_100%)]" />
       
@@ -80,7 +132,7 @@ const Hero = () => {
             </div>
 
             <motion.div variants={itemVariants}>
-              <span className="inline-flex items-center rounded-full border border-cyan-500/20 bg-gradient-to-r from-[#915eff]/15 to-cyan-500/10 px-4 py-2 text-[12px] font-bold uppercase tracking-[0.2em] text-[#c4b5fd] shadow-[0_0_24px_rgba(145,94,255,0.12)]">
+              <span className="inline-flex items-center rounded-full border border-cyan-500/20 bg-gradient-to-r from-[#915eff]/15 to-cyan-500/10 px-4 py-2 text-[12px] font-bold uppercase tracking-[0.2em] text-[#c4b5fd] shadow-[0_0_24px_rgba(145,94,255,0.12)] hover:border-[#915eff]/40 transition-colors cursor-default">
                 {t.sections.about.badge}
               </span>
             </motion.div>
@@ -92,9 +144,16 @@ const Hero = () => {
               <span className="inline sm:whitespace-nowrap font-light opacity-90">
                 {language === "tr" ? "Merhaba, ben " : "Hi, I'm "}
               </span>
-              <span className="inline whitespace-nowrap bg-gradient-to-r from-[#915eff] via-[#e879f9] to-[#22d3ee] bg-clip-text text-transparent drop-shadow-[0_0_28px_rgba(145,94,255,0.45)] animate-text-gradient font-black">
+              <motion.span 
+                animate={{ 
+                  textShadow: ["0 0 20px rgba(145,94,255,0.1)", "0 0 35px rgba(145,94,255,0.3)", "0 0 20px rgba(145,94,255,0.1)"]
+                }}
+                transition={{ duration: 3, repeat: Infinity }}
+                className="inline whitespace-nowrap bg-gradient-to-r from-[#915eff] via-[#e879f9] to-[#22d3ee] bg-clip-text text-transparent drop-shadow-[0_0_28px_rgba(145,94,255,0.45)] animate-text-gradient font-black relative group"
+              >
                 {t.hero.name}
-              </span>
+                <span className="absolute -bottom-2 sm:-bottom-4 left-0 w-12 h-[2px] bg-[#915eff] group-hover:w-full transition-all duration-700" />
+              </motion.span>
             </motion.h1>
 
             <motion.p
@@ -120,7 +179,7 @@ const Hero = () => {
             >
               <motion.a
                 href="#projects"
-                whileHover={{ scale: 1.05 }}
+                whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.96 }}
                 className="group relative overflow-hidden rounded-full bg-gradient-to-r from-white to-[#e8e6ff] px-10 py-4 text-[16px] font-black uppercase tracking-widest text-slate-900 shadow-[0_12px_40px_rgba(145,94,255,0.35)] transition-all duration-300 hover:shadow-[0_0_30px_rgba(34,211,238,0.5),0_16px_48px_rgba(145,94,255,0.45)] max-sm:w-full max-sm:text-center"
               >
@@ -130,7 +189,7 @@ const Hero = () => {
 
               <motion.a
                 href="#contact"
-                whileHover={{ scale: 1.05 }}
+                whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.96 }}
                 className="group relative overflow-hidden rounded-full border border-white/10 bg-white/[0.03] px-10 py-4 text-[16px] font-black uppercase tracking-widest text-white shadow-[0_0_24px_rgba(0,0,0,0.2)] transition-all duration-300 hover:border-[#915eff]/50 hover:bg-white/[0.07] hover:shadow-[0_0_32px_rgba(145,94,255,0.2)] max-sm:w-full max-sm:text-center"
               >
@@ -157,6 +216,10 @@ const Hero = () => {
                 key={item.value}
                 href="#tech"
                 whileTap={{ scale: 0.96 }}
+                animate={{ 
+                  y: [0, mousePos.y * 0.15, 0],
+                  x: [0, mousePos.x * 0.15, 0]
+                }}
                 className="group relative flex cursor-pointer items-center gap-3 rounded-full border border-transparent px-5 py-3 transition-all duration-300 hover:border-white/10 hover:bg-white/[0.04] hover:shadow-[0_0_20px_rgba(145,94,255,0.2)] sm:px-6 sm:py-3.5"
               >
                 {/* Glowing bottom indicator */}

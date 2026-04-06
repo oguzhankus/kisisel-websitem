@@ -34,11 +34,6 @@ type TConfig = {
     experience: TSection & { lead: string };
     works: Required<TSection>;
     tech: { badge: string; h2: string; lead: string; hr: string; active: string; details: Record<string, string> };
-    insights: {
-      p: string;
-      h2: string;
-      items: { id: string; title: string; content: string; icon: string; color: string }[];
-    };
   };
   navbar: {
     cta: string;
@@ -109,26 +104,6 @@ export const config: Record<"tr" | "en", TConfig> = {
           "C#": "Sağlam ve ölçeklenebilir backend sistemleri geliştirirken başvurduğum, nesne yönelimli programlamanın (OOP) gücünü köküne kadar hissettiren mimari temel."
         }
       },
-      insights: {
-        p: "Neden & Nasıl",
-        h2: "Öngörüler.",
-        items: [
-          {
-            id: "why-software",
-            title: "Neden Yazılım?",
-            content: "Yazılım benim için sadece kod yazmak değil; hayal edileni gerçeğe dönüştürme disiplinidir. Karmaşık sorunları basitleştirmek ve her satırda daha iyi bir kullanıcı deneyimi inşa etmek en büyük motivasyonum. Geleceği kodla tasarlamanın gücüne inanıyorum.",
-            icon: "code",
-            color: "#915eff"
-          },
-          {
-            id: "why-bandirma",
-            title: "Neden Bandırma?",
-            content: "Bandırma Onyedi Eylül Üniversitesi'nde aldığım mühendislik eğitimi, sadece teknik bir temel değil; topluluk ruhu ve kolektif çalışma disiplini kazandırdı. Yazılım Mühendisliği Topluluğu'ndaki grafik tasarım koordinatörlüğümle, mühendisliği tasarım estetiğiyle harmanladığım ilk adımları burada attım.",
-            icon: "academic",
-            color: "#22d3ee"
-          }
-        ]
-      }
     },
     navbar: {
       cta: "İletişim",
@@ -197,26 +172,6 @@ export const config: Record<"tr" | "en", TConfig> = {
           "C#": "The flagship of the .NET ecosystem. My go-to language for building robust, scalable backend architectures, deeply leveraging the power of object-oriented programming (OOP) principles."
         }
       },
-      insights: {
-        p: "Why & How",
-        h2: "Insights.",
-        items: [
-          {
-            id: "why-software",
-            title: "Why Software?",
-            content: "Software is more than just coding; it is the discipline of turning ideas into reality. My motivation is to simplify complex problems and build better user experiences in every line. I believe in the power of designing the future with code.",
-            icon: "code",
-            color: "#915eff"
-          },
-          {
-            id: "why-bandirma",
-            title: "Why Bandırma?",
-            content: "Engineering education at Bandırma University gave me a collective work discipline. My role as design coordinator in the Software Society allowed me to merge engineering with aesthetic design—the first step in my professional journey.",
-            icon: "academic",
-            color: "#22d3ee"
-          }
-        ]
-      }
     },
     navbar: {
       cta: "Contact",
