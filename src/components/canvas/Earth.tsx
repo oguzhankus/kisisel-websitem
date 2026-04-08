@@ -30,13 +30,13 @@ const EarthCanvas = () => {
       {isInView && (
     <Canvas
       frameloop="demand"
-      dpr={0.45}
+      dpr={[1, 2]}
       gl={{ 
         preserveDrawingBuffer: false, 
         powerPreference: "high-performance", 
         alpha: true,
-        antialias: false,
-        precision: "lowp"
+        antialias: true,
+        precision: "highp"
       }}
       camera={{
         fov: 45,

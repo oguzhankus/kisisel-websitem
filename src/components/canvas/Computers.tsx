@@ -48,13 +48,12 @@ const ComputersCanvas = () => {
     <div ref={containerRef} className="h-full w-full">
       <Canvas
         frameloop="demand"
-        dpr={0.5}
-        performance={{ min: 0.5 }} 
+        dpr={[1, 2]}
         camera={{ position: [15.5, 2.1, 4.85], fov: 28 }}
         gl={{
           alpha: true,
-          antialias: false,
-          precision: "lowp", // Heavy performance boost on GPUs
+          antialias: true,
+          precision: "highp", 
           preserveDrawingBuffer: false,
           powerPreference: "high-performance",
         }}
