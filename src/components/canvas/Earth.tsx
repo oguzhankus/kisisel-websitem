@@ -1,7 +1,6 @@
 import { Suspense, useRef } from "react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Preload, useGLTF } from "@react-three/drei";
-import { useInView } from "framer-motion";
 import * as THREE from "three";
 
 import CanvasLoader from "../layout/Loader";
@@ -23,40 +22,36 @@ const Earth = () => {
 
 const EarthCanvas = () => {
   const containerRef = useRef(null);
-  const isInView = useInView(containerRef, { once: false, amount: 0.15 });
-
   return (
     <div ref={containerRef} className="h-full w-full">
-      {isInView && (
-    <Canvas
-      frameloop="demand"
-      dpr={[1, 2]}
-      gl={{ 
-        preserveDrawingBuffer: false, 
-        powerPreference: "high-performance", 
-        alpha: true,
-        antialias: true,
-        precision: "highp"
-      }}
-      camera={{
-        fov: 45,
-        near: 0.1,
-        far: 200,
-        position: [-4, 3, 6],
-      }}
-    >
-      <Suspense fallback={<CanvasLoader />}>
-        <OrbitControls
-          autoRotate={true}
-          autoRotateSpeed={2.5}
-          enablePan={false}
-          enableZoom={false}
-        />
-        <Earth />
-        <Preload all />
-      </Suspense>
-    </Canvas>
-      )}
+      <Canvas
+        frameloop="always"
+        dpr={[1, 2]}
+        gl={{ 
+          preserveDrawingBuffer: false, 
+          powerPreference: "high-performance", 
+          alpha: true,
+          antialias: true,
+          precision: "highp"
+        }}
+        camera={{
+          fov: 45,
+          near: 0.1,
+          far: 200,
+          position: [-4, 3, 6],
+        }}
+      >
+        <Suspense fallback={<CanvasLoader />}>
+          <OrbitControls
+            autoRotate={true}
+            autoRotateSpeed={2.5}
+            enablePan={false}
+            enableZoom={false}
+          />
+          <Earth />
+          <Preload all />
+        </Suspense>
+      </Canvas>
     </div>
   );
 };

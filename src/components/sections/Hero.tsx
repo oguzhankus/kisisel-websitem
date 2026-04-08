@@ -17,7 +17,7 @@ const containerVariants = {
   hidden: { opacity: 0 },
   show: {
     opacity: 1,
-    transition: { staggerChildren: 0.08, delayChildren: 0.06 },
+    transition: { duration: 0 },
   },
 };
 
@@ -27,10 +27,7 @@ const itemVariants = {
     opacity: 1,
     y: 0,
     transition: {
-      type: "spring",
-      damping: 12,
-      stiffness: 90,
-      duration: 0.6,
+      duration: 0.2,
     },
   },
 };
@@ -38,23 +35,11 @@ const itemVariants = {
 const Hero = () => {
   const { language } = useLanguage();
   const t = config[language];
-  const [inView, setInView] = React.useState(true);
   const sectionRef = React.useRef<HTMLElement>(null);
 
   const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 });
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setInView(entry.isIntersecting);
-      },
-      { threshold: 0 }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
     const handleMouseMove = (e: MouseEvent) => {
       const x = (e.clientX / window.innerWidth - 0.5) * 15;
       const y = (e.clientY / window.innerHeight - 0.5) * 15;
@@ -62,7 +47,6 @@ const Hero = () => {
     };
     window.addEventListener("mousemove", handleMouseMove, { passive: true });
     return () => {
-      if (sectionRef.current) observer.unobserve(sectionRef.current);
       window.removeEventListener("mousemove", handleMouseMove);
     };
   }, []);
@@ -230,7 +214,7 @@ const Hero = () => {
       <div
         className="pointer-events-none relative z-[2] h-[clamp(18rem,40vh,26rem)] w-full sm:h-[clamp(24rem,50vh,32rem)] gpu-accel layer-promote"
       >
-        {inView && <ComputersCanvas />}
+        <ComputersCanvas />
       </div>
 
       <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[3] h-28 bg-gradient-to-t from-primary via-primary/40 to-transparent sm:h-32" />

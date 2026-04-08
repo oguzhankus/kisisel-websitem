@@ -1,4 +1,4 @@
-import { motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
 import React, { useRef, useState } from "react";
 import { SectionWrapper } from "../../hoc";
 import { fadeIn } from "../../utils/motion";
@@ -11,7 +11,6 @@ const Contact = () => {
   const { language } = useLanguage();
   const t = config[language];
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: false, amount: 0.1 });
   const [copied, setCopied] = useState(false);
 
   const handleCopyEmail = () => {
@@ -111,15 +110,12 @@ const Contact = () => {
         </div>
       </motion.div>
 
-      <motion.div
-        ref={ref}
-        variants={fadeIn("left", "tween", 0.2, 1)}
+      <div
         className="h-[400px] xl:h-auto xl:flex-1 relative cursor-grab active:cursor-grabbing"
       >
         <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_center,rgba(145,94,255,0.1)_0%,transparent_75%)]" />
-        {isInView && <EarthCanvas />}
-        
-      </motion.div>
+        <EarthCanvas />
+      </div>
     </div>
   );
 };

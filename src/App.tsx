@@ -16,6 +16,11 @@ import { config } from "./constants/config";
 import { useLanguage } from "./context/LanguageContext";
 import { BackgroundLayer } from "./components/layout/BackgroundLayer";
 import { SocialSidebar } from "./components/atoms/SocialSidebar";
+import { useGLTF } from "@react-three/drei";
+
+// Ultimate Pre-loading - Ensures GPU textures are fetched immediately
+useGLTF.preload("./desktop_pc/scene.gltf");
+useGLTF.preload("./planet/scene.gltf");
 
 const App = () => {
   const { language } = useLanguage();

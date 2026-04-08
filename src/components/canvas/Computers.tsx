@@ -47,7 +47,7 @@ const ComputersCanvas = () => {
   return (
     <div ref={containerRef} className="h-full w-full">
       <Canvas
-        frameloop="demand"
+        frameloop="always"
         dpr={[1, 2]}
         camera={{ position: [15.5, 2.1, 4.85], fov: 28 }}
         gl={{
