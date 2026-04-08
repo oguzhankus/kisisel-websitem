@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { SectionWrapper } from "../../hoc";
 import { fadeIn } from "../../utils/motion";
 import { config } from "../../constants/config";
@@ -10,7 +10,6 @@ import { EarthCanvas } from "../canvas";
 const Contact = () => {
   const { language } = useLanguage();
   const t = config[language];
-  const ref = useRef(null);
   const [copied, setCopied] = useState(false);
 
   const handleCopyEmail = () => {
@@ -27,7 +26,7 @@ const Contact = () => {
       >
         {/* Core illumination */}
         <div className="pointer-events-none absolute -left-20 -top-20 h-64 w-64 rounded-full bg-[radial-gradient(circle_at_center,rgba(145,94,255,0.15)_0%,transparent_70%)]" />
-        
+
         <div className="relative z-10">
           <Header useMotion={true} {...t.contact} />
           <p className="text-secondary/90 mt-5 max-w-xl text-[16px] leading-[1.8] font-medium">
@@ -89,7 +88,7 @@ const Contact = () => {
               className="group relative h-[56px] px-8 rounded-full border border-white/10 bg-white/[0.03] text-[13px] font-black uppercase tracking-widest text-white transition-all hover:border-[#915eff]/50 hover:bg-[#915eff]/10 active:scale-95 flex items-center justify-center gap-3"
             >
               <span className="relative z-10">{copied ? (language === "tr" ? "Kopyalandı!" : "Copied!") : (language === "tr" ? "E-Posta Kopyala" : "Copy Email")}</span>
-              <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4 stroke-current opacity-70 group-hover:opacity-100 group-hover:text-cyan-400 transition-all"><path d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4 stroke-current opacity-70 group-hover:opacity-100 group-hover:text-cyan-400 transition-all"><path d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
             </button>
           </div>
         </form>
@@ -110,9 +109,7 @@ const Contact = () => {
         </div>
       </motion.div>
 
-      <div
-        className="h-[400px] xl:h-auto xl:flex-1 relative cursor-grab active:cursor-grabbing"
-      >
+      <div className="h-[400px] xl:h-auto xl:flex-1 relative cursor-grab active:cursor-grabbing">
         <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_center,rgba(145,94,255,0.1)_0%,transparent_75%)]" />
         <EarthCanvas />
       </div>
