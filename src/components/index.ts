@@ -11,9 +11,11 @@ import About from "./sections/About";
 import Tech from "./sections/Tech";
 import Experience from "./sections/Experience";
 import Works from "./sections/Works";
+import Insights from "./sections/Insights";
 import Contact from "./sections/Contact";
 import BackToTop from "./atoms/BackToTop";
 import CanvasLoader from "./layout/Loader";
+import ProjectModal from "./molecules/ProjectModal";
 
 export {
   Hero,
@@ -22,9 +24,11 @@ export {
   Tech,
   Experience,
   Works,
+  Insights,
   Contact,
   BackToTop,
   CanvasLoader,
+  ProjectModal,
   EarthCanvas,
   BallCanvas,
   ComputersCanvas,

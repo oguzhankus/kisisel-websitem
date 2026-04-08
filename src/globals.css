@@ -4,6 +4,11 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --mouse-x: 0px;
+  --mouse-y: 0px;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -70,13 +75,11 @@ html[data-theme="dark"],
 html[data-theme="light"] {
   background-color: rgb(var(--app-primary));
   color: rgb(var(--app-foreground));
-  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .hero-pattern-layer {
   opacity: var(--hero-pattern-opacity);
   transition: opacity 0.5s ease;
-  will-change: opacity, transform;
   transform: translateZ(0);
 }
 
@@ -249,6 +252,7 @@ html[data-theme="light"] .bg-tertiary {
   text-indent: -9999em;
   animation: mulShdSpin 1.1s infinite ease;
   transform: translateZ(0);
+  will-change: transform, box-shadow;
 }
 
 @keyframes mulShdSpin {
@@ -328,19 +332,21 @@ html[data-theme="light"] .bg-tertiary {
   }
 }
 @keyframes floatOrb {
-  0% { transform: translate(0, 0) scale(1); opacity: 0.3; }
-  33% { transform: translate(100px, -50px) scale(1.2); opacity: 0.5; }
-  66% { transform: translate(-50px, 100px) scale(0.8); opacity: 0.2; }
-  100% { transform: translate(0, 0) scale(1); opacity: 0.3; }
+  0% { transform: translate(0, 0) scale(1); opacity: 0.2; }
+  33% { transform: translate(60px, -30px) scale(1.1); opacity: 0.4; }
+  66% { transform: translate(-30px, 60px) scale(0.9); opacity: 0.15; }
+  100% { transform: translate(0, 0) scale(1); opacity: 0.2; }
 }
 
 .ambient-orb {
   position: absolute;
   border-radius: 50%;
-  filter: blur(140px);
+  filter: blur(34px); /* Optimized for compositor stability (from 60px) */
   z-index: -1;
   pointer-events: none;
-  animation: floatOrb 20s infinite ease-in-out;
+  animation: floatOrb 45s infinite ease-in-out; /* Slower = Lower CPU usage */
+  will-change: transform, opacity; 
+  transform: translateZ(0); /* Force GPU layer */
 }
 
 @keyframes lightStreak {
@@ -378,17 +384,6 @@ html[data-theme="light"] .bg-tertiary {
     linear-gradient(to right, rgba(145, 94, 255, 0.05) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(145, 94, 255, 0.05) 1px, transparent 1px);
   mask-image: radial-gradient(ellipse 80% 50% at 50% 50%, black, transparent);
-}
-
-.noise-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 50;
-  opacity: 0.02;
-  pointer-events: none;
-  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAMAAAAp4XiDAAAAUVBMVEWFhYWDg4N3d3dtbW1mzM2NjY3///8fHx9PT09ra2t1dXUrKytnqP2koAF66eyGp6eS9745OTk9PT1OTk9qtuS998fMzMz///8fHx9ra2t3d3dnZ2c6JzDxAAAADHRSTlMAEBFXYGogICAgICAgpY4hlwAAAJVJREFUeNrtwTEOgCAMBMAOiKOidHwz/v8zEWMCp92S6Ad8tu9p98p02L5PZ59T7zGfptPZ59R7zKfptPZ59S7zKTptfU69xnyKTmufU+8xn6LT2ufUu8yn6LT2OfUe8yk6rX1Ovcd8ik5rn1PvMZ+i09rn1LvMp+i09jn1HvMpOq19Tr3HfIpOa59T7zKfotPa59R7zKfoteYF1wIBZ6YAmYQAAAAASUVORK5CYII=");
-  transform: translateZ(0);
-  will-change: transform;
 }
 
 .mouse-light {
@@ -493,9 +488,224 @@ a, button, input, textarea, [role="button"] {
   cursor: pointer !important;
 }
 
-/* GPU Acceleration Utility */
+@keyframes roleScanner {
+  0% { transform: translateY(-100%); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(100%); opacity: 0; }
+}
+
+.animate-role-scanner {
+  animation: roleScanner 3s linear infinite;
+}
+
+@keyframes glassGlint {
+  0% { left: -100%; opacity: 0; }
+  50% { opacity: 0.3; }
+  100% { left: 100%; opacity: 0; }
+}
+
+.glass-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-shimmer::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(255, 255, 255, 0.05),
+    transparent
+  );
+  transform: skewX(-25deg);
+  animation: glassGlint 8s infinite;
+  pointer-events: none;
+}
+
+/* Masterpiece Digital Utilities */
+.prism-refraction {
+  transition: filter 0.5s ease, transform 0.5s ease;
+}
+
+.group:hover .prism-refraction {
+  filter: drop-shadow(2px 0px 0px rgba(255, 0, 85, 0.4)) 
+          drop-shadow(-2px 0px 0px rgba(0, 255, 255, 0.4));
+}
+
+.neural-network-bg {
+  background-image: radial-gradient(circle at 2px 2px, rgba(145, 94, 255, 0.05) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+@keyframes hitechScan {
+  0% { transform: translateY(-100%); opacity: 0; }
+  50% { opacity: 0.8; }
+  100% { transform: translateY(100%); opacity: 0; }
+}
+
+.animate-hitech-scan {
+  animation: hitechScan 2s linear infinite;
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 8s linear infinite;
+}
+
+@keyframes pulse-slow {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.7; }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 3s ease-in-out infinite;
+}
+
+/* Zenith Visual Utilities - Optimized for Zero-Lag (Blur Removed for Stability) */
+.liquid-glass {
+  background: rgba(5, 5, 10, 0.94); /* Higher opacity instead of blur */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    0 15px 50px rgba(0, 0, 0, 0.6),
+    inset 0 0 10px rgba(145, 94, 255, 0.05);
+}
+
+.neon-border-pulse {
+  position: relative;
+}
+
+.neon-border-pulse::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    45deg,
+    rgba(145, 94, 255, 0.3),
+    rgba(34, 211, 238, 0.3),
+    rgba(145, 94, 255, 0.3)
+  );
+  -webkit-mask: 
+     linear-gradient(#fff 0 0) content-box, 
+     linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.5;
+  transition: opacity 0.5s ease;
+}
+
+.group:hover .neon-border-pulse::before {
+  opacity: 1;
+  animation: borderRotate 4s linear infinite;
+}
+
+@keyframes borderRotate {
+  0% { filter: hue-rotate(0deg); }
+  100% { filter: hue-rotate(360deg); }
+}
+
+/* GPU Acceleration Priority Utility - Maximum Efficiency */
 .gpu-accel {
-  transform: translateZ(0);
+  transform: translate3d(0, 0, 0); 
   backface-visibility: hidden;
+  perspective: 1000px;
   will-change: transform, opacity;
 }
+
+/* Force Layer Promotion on heavy Fixed/Absolute elements */
+.layer-promote {
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+@keyframes dataStream {
+  0% { transform: translateY(110vh); opacity: 0; }
+  10% { opacity: 0.2; }
+  90% { opacity: 0.2; }
+  100% { transform: translateY(-10vh); opacity: 0; }
+}
+
+.animate-data-stream {
+  animation: dataStream 15s linear infinite;
+  will-change: transform;
+}
+
+@keyframes dustFloat {
+  0%, 100% { opacity: 0; transform: translate(0, 0); }
+  50% { opacity: 0.2; transform: translate(10px, -10px); }
+}
+
+.animate-dust {
+  animation: dustFloat 12s ease-in-out infinite;
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+  10% { opacity: 0.15; }
+  90% { opacity: 0.15; }
+  100% { transform: translateY(-20vh) rotate(360deg); opacity: 0; }
+}
+
+.animate-float-up {
+  animation: floatUp 20s linear infinite;
+  will-change: transform, opacity;
+}
+
+/* GLINT / SHIMMER SYSTEM - ZENITH MASTERPIECE */
+@keyframes glass-glint {
+  0% { transform: translateX(-200%) skewX(-25deg); opacity: 0; }
+  20% { opacity: 0.4; }
+  80% { opacity: 0.4; }
+  100% { transform: translateX(200%) skewX(-25deg); opacity: 0; }
+}
+
+.animate-glint {
+  animation: glass-glint 4s ease-in-out infinite;
+}
+
+.glass-glint-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-glint-container::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -200%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(255, 255, 255, 0.08),
+    transparent
+  );
+  transform: skewX(-25deg);
+  animation: glass-glint 6s infinite;
+  pointer-events: none;
+}
+
+.hud-corner-marker {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border: 1px solid rgba(145, 94, 255, 0.4);
+  pointer-events: none;
+}
+
+.hud-corner-marker.top-left { top: 12px; left: 12px; border-right: 0; border-bottom: 0; }
+.hud-corner-marker.top-right { top: 12px; right: 12px; border-left: 0; border-bottom: 0; }
+.hud-corner-marker.bottom-left { bottom: 12px; left: 12px; border-right: 0; border-top: 0; }
+.hud-corner-marker.bottom-right { bottom: 12px; right: 12px; border-left: 0; border-top: 0; }

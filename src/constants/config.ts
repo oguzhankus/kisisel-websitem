@@ -34,6 +34,11 @@ type TConfig = {
     experience: TSection & { lead: string };
     works: Required<TSection>;
     tech: { badge: string; h2: string; lead: string; hr: string; active: string; details: Record<string, string> };
+    insights: {
+      p: string;
+      h2: string;
+      items: { id: string; title: string; content: string; icon: string; color: string }[];
+    };
   };
   navbar: {
     cta: string;
@@ -104,6 +109,33 @@ export const config: Record<"tr" | "en", TConfig> = {
           "C#": "Sağlam ve ölçeklenebilir backend sistemleri geliştirirken başvurduğum, nesne yönelimli programlamanın (OOP) gücünü köküne kadar hissettiren mimari temel."
         }
       },
+      insights: {
+        p: "Neden & Nasıl",
+        h2: "Öngörüler.",
+        items: [
+          {
+            id: "why-software",
+            title: "Neden Yazılım?",
+            content: "Yazılım benim için sadece bir araç değil, karmaşık sorunları zarif çözümlere dönüştürme sanatıdır. Sınırları olmayan bir tuvalde mantıkla yaratıcılığın birleştiği bu alanda, her satır kodla kullanıcı deneyimini daha anlamlı, daha akışkan ve daha insan odaklı hale getirmeyi hedefliyorum. Geleceği satır satır kodla tasarlamanın ve gerçek kılmanın gücüne inanıyorum.",
+            icon: "code",
+            color: "#915eff"
+          },
+          {
+            id: "why-bandirma",
+            title: "Neden Bandırma?",
+            content: "Mühendislik yolculuğuma Bandırma Onyedi Eylül Üniversitesi'nde başlamak, beklediğimden çok daha özel bir deneyime dönüştü. Bandırma, 'küçük ama güzel' yapısı sayesinde bana büyük şehrin karmaşasından uzak, tam odaklı bir çalışma alanı sundu. Bu liman kenti, samimi insanları ve sakin atmosferiyle kendimi geliştirmem için huzurlu bir yuva oldu.",
+            icon: "anchor",
+            color: "#22d3ee"
+          },
+          {
+            id: "future-vision",
+            title: "Gelecek Vizyonum",
+            content: "Teknolojinin hızıyla senkronize bir gelişim tutkusuyla, yapay zeka ve modern UI/UX trendlerini projelerime entegre ederek sınırları zorlamayı hedefliyorum. Sadece kod yazmak değil, sürdürülebilir, ölçeklenebilir ve topluma fayda sağlayan dijital ekosistemler inşa eden bir mimar olmak yolunda her gün yeni bir şeyler öğrenme heyecanını koruyorum.",
+            icon: "rocket",
+            color: "#ff00ea"
+          }
+        ]
+      }
     },
     navbar: {
       cta: "İletişim",
@@ -172,6 +204,33 @@ export const config: Record<"tr" | "en", TConfig> = {
           "C#": "The flagship of the .NET ecosystem. My go-to language for building robust, scalable backend architectures, deeply leveraging the power of object-oriented programming (OOP) principles."
         }
       },
+      insights: {
+        p: "Why & How",
+        h2: "Insights.",
+        items: [
+          {
+            id: "why-software",
+            title: "Why Software?",
+            content: "Software for me is not just a tool, but the art of transforming complex problems into elegant solutions. On a canvas without boundaries, I aim to make the user experience more meaningful and human-centric with every line of code. I believe in the power of designing and realizing the future, line by line.",
+            icon: "code",
+            color: "#915eff"
+          },
+          {
+            id: "why-bandirma",
+            title: "Why Bandırma?",
+            content: "Starting my engineering journey at Bandırma University turned into a much more special experience than I expected. Its 'small but beautiful' structure provided me with a focused workspace away from the chaos of the big city. This port city became a peaceful home for my self-improvement.",
+            icon: "anchor",
+            color: "#22d3ee"
+          },
+          {
+            id: "future-vision",
+            title: "Future Vision",
+            content: "With a passion for development synchronized with the speed of technology, I aim to push boundaries by integrating AI and modern UI/UX trends. I strive to be an architect who builds sustainable, scalable digital ecosystems that benefit society, preserving the excitement of learning something new every day.",
+            icon: "rocket",
+            color: "#ff00ea"
+          }
+        ]
+      }
     },
     navbar: {
       cta: "Contact",

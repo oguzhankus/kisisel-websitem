@@ -1,10 +1,9 @@
+import React, { useEffect } from "react";
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
 
 import { styles } from "../../constants/styles";
 import { ComputersCanvas } from "../canvas";
 import { config } from "../../constants/config";
-import { CyberPedestal, DigitalShards } from "../atoms/HeroDecoration";
 import { useLanguage } from "../../context/LanguageContext";
 
 const heroTechStrip = [
@@ -13,37 +12,6 @@ const heroTechStrip = [
   { value: "CSS", label: "Stil, düzen, responsive" },
   { value: "C#", label: "Nesne yönelimli programlama" },
 ];
-
-// Ambient Particles Component for Depth
-const AmbientParticles = () => {
-  return (
-    <div className="absolute inset-0 z-0 pointer-events-none opacity-20 overflow-hidden">
-      {[...Array(20)].map((_, i) => (
-        <motion.div
-          key={i}
-          initial={{ 
-            x: Math.random() * window.innerWidth, 
-            y: Math.random() * window.innerHeight,
-            scale: Math.random() * 0.5 + 0.5,
-            opacity: Math.random() * 0.5
-          }}
-          animate={{ 
-            y: [null, Math.random() * -100 - 50],
-            opacity: [0, 0.8, 0],
-            scale: [0.5, 1.2, 0.5]
-          }}
-          transition={{
-            duration: Math.random() * 5 + 5,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: Math.random() * 5
-          }}
-          className="absolute h-1 w-1 bg-cyan-400 rounded-full blur-[1px] shadow-[0_0_8px_#22d3ee]"
-        />
-      ))}
-    </div>
-  );
-};
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -70,17 +38,33 @@ const itemVariants = {
 const Hero = () => {
   const { language } = useLanguage();
   const t = config[language];
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [inView, setInView] = React.useState(true);
+  const sectionRef = React.useRef<HTMLElement>(null);
+
+  const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 });
 
   useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setInView(entry.isIntersecting);
+      },
+      { threshold: 0 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
     const handleMouseMove = (e: MouseEvent) => {
-      setMousePos({ 
-        x: (e.clientX / window.innerWidth - 0.5) * 20, 
-        y: (e.clientY / window.innerHeight - 0.5) * 20 
-      });
+      const x = (e.clientX / window.innerWidth - 0.5) * 15;
+      const y = (e.clientY / window.innerHeight - 0.5) * 15;
+      setMousePos({ x, y });
     };
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
+    return () => {
+      if (sectionRef.current) observer.unobserve(sectionRef.current);
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
   }, []);
 
   const heroTechLabels: Record<string, string> = {
@@ -91,39 +75,35 @@ const Hero = () => {
   };
 
   return (
-    <section className="relative isolate min-h-[100svh] w-full overflow-x-hidden pb-20 sm:pb-24">
-      {/* Ambient Depth Layer */}
-      <AmbientParticles />
+    <section ref={sectionRef} className="relative isolate min-h-[100svh] w-full overflow-x-hidden pb-20 sm:pb-24">
+      {/* Optimized Depth Layer - Minimal Overdraw */}
       
-      {/* Dynamic Background Decor */}
-      <DigitalShards />
-      <CyberPedestal />
-
-      <motion.div
-        animate={{ 
-          x: mousePos.x * -0.5,
-          y: mousePos.y * -0.5
-        }}
-        className="hero-gradient-layer pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(ellipse_120%_80%_at_0%_-20%,rgba(145,94,255,0.22),transparent_50%),radial-gradient(ellipse_90%_60%_at_100%_0%,rgba(6,182,212,0.12),transparent_45%),radial-gradient(circle_at_70%_80%,rgba(91,33,182,0.18),transparent_40%)] transition-opacity duration-300"
+      {/* Static Visual Identity Layer */}
+      <div 
+        className="hero-gradient-layer pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(ellipse_120%_80%_at_0%_-20%,rgba(145,94,255,0.18),transparent_50%),radial-gradient(ellipse_90%_60%_at_100%_0%,rgba(6,182,212,0.1),transparent_45%)] opacity-50"
+        style={{ transform: `translate3d(${mousePos.x * -0.2}px, ${mousePos.y * -0.2}px, 0)` }}
         aria-hidden
       />
       
       {/* Cinematic Vignette */}
-      <div className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(5,5,16,0.4)_70%,rgba(5,5,16,0.8)_100%)]" />
+      <div className="pointer-events-none absolute inset-0 z-0 bg-[#050510]/30" />
       
       <div
-        className="pointer-events-none absolute inset-x-0 bottom-0 top-[45%] z-0 bg-gradient-to-t from-primary via-transparent to-transparent opacity-90"
+        className="pointer-events-none absolute inset-x-0 bottom-0 top-[45%] z-0 bg-gradient-to-t from-primary/40 via-transparent to-transparent opacity-40"
         aria-hidden
       />
 
       <div
         className={`relative z-10 mx-auto flex max-w-7xl flex-col ${styles.paddingX} pb-10 pt-36 sm:pt-40 lg:pt-44`}
       >
-        <div className="relative z-20 w-full">
+        <div className="relative z-20 w-full group/hero">
           <motion.div
             variants={containerVariants}
             initial="hidden"
             animate="show"
+            style={{ 
+              transform: `translate3d(${mousePos.x * 0.1}px, ${mousePos.y * 0.1}px, 0) rotateX(${mousePos.y * -0.01}deg) rotateY(${mousePos.x * 0.01}deg)`,
+            }}
             className="relative w-full max-w-none pb-2"
           >
             <div className="mt-2 hidden flex-col items-center justify-center sm:absolute sm:left-[-3rem] sm:top-2 sm:flex">
@@ -149,7 +129,7 @@ const Hero = () => {
                   textShadow: ["0 0 20px rgba(145,94,255,0.1)", "0 0 35px rgba(145,94,255,0.3)", "0 0 20px rgba(145,94,255,0.1)"]
                 }}
                 transition={{ duration: 3, repeat: Infinity }}
-                className="inline whitespace-nowrap bg-gradient-to-r from-[#915eff] via-[#e879f9] to-[#22d3ee] bg-clip-text text-transparent drop-shadow-[0_0_28px_rgba(145,94,255,0.45)] animate-text-gradient font-black relative group"
+                className="inline-block sm:inline sm:whitespace-nowrap bg-gradient-to-r from-[#915eff] via-[#e879f9] to-[#22d3ee] bg-clip-text text-transparent drop-shadow-[0_0_28px_rgba(145,94,255,0.45)] animate-text-gradient font-black relative group"
               >
                 {t.hero.name}
                 <span className="absolute -bottom-2 sm:-bottom-4 left-0 w-12 h-[2px] bg-[#915eff] group-hover:w-full transition-all duration-700" />
@@ -201,47 +181,56 @@ const Hero = () => {
         </div>
 
         <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
           viewport={{ once: true, amount: 0.15 }}
-          transition={{ duration: 0.65, ease: "easeOut" }}
-          className="relative z-30 mb-8 mt-12 flex w-full justify-start overflow-x-auto pb-4 max-sm:-mx-6 max-sm:px-6 sm:mb-20 sm:mt-10 sm:justify-center sm:overflow-visible sm:pb-0 group"
+          transition={{ duration: 1, ease: "easeOut" }}
+          className="relative z-30 mb-8 mt-12 flex w-full overflow-hidden sm:mb-20 sm:mt-10 group"
         >
-          {/* Mobile Scroll Indicator Fade */}
-          <div className="pointer-events-none absolute right-0 top-0 z-40 h-full w-20 bg-gradient-to-l from-primary via-primary/40 to-transparent opacity-0 transition-opacity duration-300 max-sm:opacity-100 sm:hidden" />
+          {/* Mobile HUD Edge Fades - High Cinematic Density */}
+          <div className="pointer-events-none absolute left-[-2px] top-0 z-40 h-full w-24 bg-gradient-to-r from-primary via-primary/50 to-transparent" />
+          <div className="pointer-events-none absolute right-[-2px] top-0 z-40 h-full w-24 bg-gradient-to-l from-primary via-primary/50 to-transparent" />
           
-          <div className="flex w-max items-center justify-center gap-2 rounded-full border border-white/5 bg-[#050510]/60 p-2 shadow-[0_20px_50px_rgba(0,0,0,0.5),inset_0_0_20px_rgba(145,94,255,0.05)] sm:gap-3 sm:p-2.5">
-            {heroTechStrip.map((item) => (
+          <motion.div 
+            animate={{ 
+              x: ["0%", "-50%"] 
+            }}
+            transition={{ 
+              duration: 32, 
+              repeat: Infinity, 
+              ease: "linear" 
+            }}
+            className="flex w-max items-center gap-4 py-2"
+            style={{ willChange: "transform" }}
+          >
+            {[...heroTechStrip, ...heroTechStrip].map((item, index) => (
               <motion.a
-                key={item.value}
+                key={`${item.value}-${index}`}
                 href="#tech"
-                whileTap={{ scale: 0.96 }}
-                animate={{ 
-                  y: [0, mousePos.y * 0.15, 0],
-                  x: [0, mousePos.x * 0.15, 0]
-                }}
-                className="group relative flex cursor-pointer items-center gap-3 rounded-full border border-transparent px-5 py-3 transition-all duration-300 hover:border-white/10 hover:bg-white/[0.04] hover:shadow-[0_0_20px_rgba(145,94,255,0.2)] sm:px-6 sm:py-3.5"
+                whileTap={{ scale: 0.94 }}
+                className="group relative flex shrink-0 cursor-pointer items-center gap-4 rounded-2xl border border-white/5 bg-[#050510]/80 px-6 py-4 shadow-[0_10px_20px_rgba(0,0,0,0.3),inset_0_0_10px_rgba(145,94,255,0.02)] transition-all duration-300 hover:border-[#915eff]/30 hover:bg-[#050510]/95 sm:rounded-full sm:px-7 sm:py-3.5"
               >
-                {/* Glowing bottom indicator */}
-                <div className="pointer-events-none absolute -bottom-px left-1/2 h-[2px] w-0 -translate-x-1/2 bg-gradient-to-r from-transparent via-cyan-400 to-transparent opacity-0 transition-all duration-300 group-hover:w-[60%] group-hover:opacity-100" />
+                {/* HUD Scan Pulse Animation */}
+                <div className="pointer-events-none absolute inset-x-[15%] bottom-0 h-px bg-gradient-to-r from-transparent via-[#915eff] to-transparent opacity-0 transition-all duration-500 group-hover:inset-x-0 group-hover:opacity-100 blur-[0.5px]" />
+                <div className="pointer-events-none absolute inset-0 rounded-[inherit] border border-[#22d3ee]/0 opacity-0 transition-all duration-500 group-hover:border-[#22d3ee]/20 group-hover:opacity-100" />
                 
-                <p className="bg-gradient-to-br from-foreground to-secondary/60 bg-clip-text text-[15px] font-bold tracking-wide text-transparent transition-all duration-300 group-hover:from-cyan-500 group-hover:to-purple-600 sm:text-[16px]">
+                <p className="bg-gradient-to-br from-white to-gray-400 bg-clip-text text-[15px] font-black tracking-tight text-transparent transition-all duration-300 group-hover:from-cyan-400 group-hover:to-[#915eff] sm:text-[16px]">
                   {item.value}
                 </p>
-                <div className="h-4 w-px bg-white/10 transition-colors group-hover:bg-[#915eff]/50" />
-                <p className="whitespace-nowrap text-[12px] font-medium text-secondary/60 transition-colors group-hover:text-cyan-50 sm:text-[13px]">
+                <div className="h-4 w-px bg-white/10 transition-colors group-hover:bg-cyan-400/40" />
+                <p className="whitespace-nowrap text-[12px] font-bold text-secondary/60 transition-colors group-hover:text-white/90 sm:text-[13px]">
                   {heroTechLabels[item.value]}
                 </p>
               </motion.a>
             ))}
-          </div>
+          </motion.div>
         </motion.div>
       </div>
 
       <div
-        className="pointer-events-none relative z-[2] h-[clamp(18rem,40vh,26rem)] w-full sm:h-[clamp(24rem,50vh,32rem)]"
+        className="pointer-events-none relative z-[2] h-[clamp(18rem,40vh,26rem)] w-full sm:h-[clamp(24rem,50vh,32rem)] gpu-accel layer-promote"
       >
-        <ComputersCanvas />
+        {inView && <ComputersCanvas />}
       </div>
 
       <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[3] h-28 bg-gradient-to-t from-primary via-primary/40 to-transparent sm:h-32" />
@@ -250,4 +239,4 @@ const Hero = () => {
   );
 };
 
-export default Hero;
+export default React.memo(Hero);

@@ -7,13 +7,12 @@ import type {
 } from "../types";
 
 import {
-  creator,
-  web,
   javascript,
   html,
   css,
   csharp,
   banuyazilimToplulugu,
+  bandirmaUniversity,
   portfolioWebsite,
 } from "../assets";
 
@@ -40,13 +39,13 @@ const tr: {
   services: [
     {
       title: "Yazılım Mühendisliği · 1. Sınıf",
-      icon: web,
+      icon: bandirmaUniversity,
       description:
         "Bandırma Onyedi Eylül Üniversitesi Yazılım Mühendisliği’nde temel bilgisayar bilimi ve mühendislik disiplinini akademik çerçevede ilerletiyorum.",
     },
     {
       title: "Grafik Tasarım Koordinatörü",
-      icon: creator,
+      icon: banuyazilimToplulugu,
       description:
         "BANÜ Yazılım Mühendisliği Topluluğu’nda etkinlik ve iletişim görsellerini üstlenerek markayı net, modern ve tutarlı tutuyorum.",
     },
@@ -70,6 +69,8 @@ const tr: {
       name: "Kişisel Portföy Websitesi",
       description:
         "React, Three.js ve Tailwind CSS ile sıfırdan geliştirdiğim, 3D bilgisayar modeli, glassmorphism tasarım ve modern animasyonlar içeren kişisel portföy websitem.",
+      longDescription:
+        "Bu proje, modern web teknolojilerinin sınırlarını zorlayan, kullanıcı deneyimini ön planda tutan bir dijital vitrindir. Framer Motion ile akışkan animasyonlar, Three.js ile etkileşimli 3D öğeler ve Tailwind CSS ile tamamen responsive bir yapı üzerine inşa edilmiştir. Kod kalitesi ve görsel estetik arasında mükemmel bir denge kurulmuştur.",
       tags: [
         {
           name: "react",
@@ -86,6 +87,7 @@ const tr: {
       ],
       image: portfolioWebsite,
       sourceCodeLink: "https://github.com/oguzhankus",
+      liveLink: "https://oguzhankus.vercel.app",
     },
   ],
 };
@@ -113,13 +115,13 @@ const en: {
   services: [
     {
       title: "Software Eng. · 1st Year",
-      icon: web,
+      icon: bandirmaUniversity,
       description:
         "Advancing my fundamentals in computer science and engineering disciplines within the academic framework of Bandırma Onyedi Eylül University.",
     },
     {
       title: "Graphic Design Coordinator",
-      icon: creator,
+      icon: banuyazilimToplulugu,
       description:
         "Overseeing event and communication visuals at BANÜ Software Engineering Society to maintain a clear, modern, and consistent brand voice.",
     },
@@ -143,6 +145,8 @@ const en: {
       name: "Personal 3D Portfolio",
       description:
         "A high-performance personal portfolio developed from the ground up using React, Three.js, and Tailwind CSS. Features an interactive 3D workstation model, glassmorphism UI/UX, and smooth motion-based transitions.",
+      longDescription:
+        "This project is a digital showcase pushing the boundaries of modern web technologies with a focus on user experience. Built on fluid animations with Framer Motion, interactive 3D elements with Three.js, and a fully responsive structure with Tailwind CSS, it achieves a perfect balance between code quality and visual aesthetics.",
       tags: [
         {
           name: "react",
@@ -159,6 +163,7 @@ const en: {
       ],
       image: portfolioWebsite,
       sourceCodeLink: "https://github.com/oguzhankus",
+      liveLink: "https://oguzhankus.vercel.app",
     },
   ],
 };

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 import { SectionWrapper } from "../../hoc";
@@ -56,6 +56,9 @@ const Tech = () => {
               {/* Radial Glow on Hover */}
               <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100 bg-[radial-gradient(circle_at_center,rgba(145,94,255,0.1)_0%,transparent_70%)]" />
               
+              {/* Neural Network Pattern on Hover */}
+              <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 neural-network-bg" />
+
               {/* Persistent Holographic Edges */}
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#915eff]/5 to-transparent opacity-50" />
               <div className="pointer-events-none absolute -top-[1px] left-[10%] h-[1px] w-[80%] bg-gradient-to-r from-transparent via-cyan-400/40 to-transparent transition-all duration-500 group-hover:via-cyan-400 group-hover:w-[90%]" />
@@ -115,8 +118,9 @@ const Tech = () => {
               
               <div className="relative z-10 flex flex-col items-center text-center">
                 {/* 2D Logo Extraction for Modal */}
-                <div className="mb-6 flex h-24 w-24 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] p-5 shadow-[0_0_30px_rgba(145,94,255,0.2)]">
-                  <img src={technologies.find(tech => tech.name === activeTech)?.icon} alt={activeTech} className="h-full w-full object-contain drop-shadow-[0_0_12px_rgba(255,255,255,0.3)]" />
+                <div className="mb-6 relative flex h-24 w-24 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.04] p-5 shadow-[0_0_30px_rgba(145,94,255,0.2)] overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#915eff]/30 to-transparent h-10 w-full animate-hitech-scan pointer-events-none" />
+                  <img src={technologies.find(tech => tech.name === activeTech)?.icon} alt={activeTech} className="h-full w-full object-contain drop-shadow-[0_0_12px_rgba(255,255,255,0.3)] relative z-10" />
                 </div>
                 
                 <h3 className="mb-4 bg-gradient-to-r from-white via-[#e879f9] to-cyan-300 bg-clip-text text-3xl font-black text-transparent drop-shadow-[0_0_15px_rgba(145,94,255,0.5)]">
@@ -142,4 +146,5 @@ const Tech = () => {
   );
 };
 
-export default SectionWrapper(Tech, "tech");
+const MemoizedTech = React.memo(Tech);
+export default SectionWrapper(MemoizedTech, "tech");

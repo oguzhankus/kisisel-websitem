@@ -14,7 +14,7 @@ const NavLink = ({ nav, active, setActive }: any) => {
     <li
       className={`${
         active === nav.id ? "text-white" : "text-secondary"
-      } hover:text-white px-4 py-2 text-[15px] font-black uppercase tracking-wider cursor-none transition-all duration-300 relative`}
+      } hover:text-white px-4 py-2 text-[15px] font-black uppercase tracking-wider transition-all duration-300 relative`}
       onClick={() => setActive(nav.id)}
     >
       <a href={`#${nav.id}`} className="relative z-10">{nav.title}</a>
@@ -41,56 +41,66 @@ const Navbar = () => {
   const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
-    const handleScroll = () => {
+    let ticking = false;
+    let sectionPositions: { id: string; top: number; height: number }[] = [];
+
+    const cachePositions = () => {
+      const sections = document.querySelectorAll("section[id]");
+      sectionPositions = Array.from(sections).map((section: any) => ({
+        id: section.getAttribute("id"),
+        top: section.offsetTop,
+        height: section.offsetHeight,
+      }));
+    };
+
+    cachePositions();
+    window.addEventListener("resize", cachePositions);
+
+    const updateNavbar = () => {
       const scrollTop = window.scrollY;
       const docHeight = document.documentElement.scrollHeight - window.innerHeight;
       const progress = (scrollTop / docHeight) * 100;
 
       setScrollProgress(progress);
+      setScrolled(scrollTop > 100);
 
-      if (scrollTop > 100) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
+      // Ultra-Fast Highlighter: Uses cached numeric values
+      const currentScroll = scrollTop + window.innerHeight * 0.3;
+      const activeSection = sectionPositions.find(
+        (section) => currentScroll >= section.top && currentScroll < section.top + section.height
+      );
+
+      if (activeSection) {
+        setActive(activeSection.id);
+      } else if (scrollTop < 100) {
         setActive("");
+      }
+
+      ticking = false;
+    };
+
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateNavbar);
+        ticking = true;
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
-
-    const navbarHighlighter = () => {
-      const sections = document.querySelectorAll("section[id]");
-
-      sections.forEach((current) => {
-        const sectionId = current.getAttribute("id");
-        // @ts-ignore
-        const sectionHeight = current.offsetHeight;
-        const sectionTop =
-          current.getBoundingClientRect().top - sectionHeight * 0.2;
-
-        if (sectionTop < 0 && sectionTop + sectionHeight > 0) {
-          setActive(sectionId);
-        }
-      });
-    };
-
-    window.addEventListener("scroll", navbarHighlighter);
+    window.addEventListener("scroll", onScroll, { passive: true });
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("scroll", navbarHighlighter);
+      window.removeEventListener("resize", cachePositions);
+      window.removeEventListener("scroll", onScroll);
     };
   }, []);
 
-  const glassPill = (extra: string) =>
-    `rounded-full border border-white/10 transition-all duration-300 ${extra} ${scrolled
-      ? "bg-[#050510]/80 shadow-[0_10px_40px_rgba(0,0,0,0.3)] border-[#915eff]/20"
-      : "bg-white/[0.03]"
-    }`;
+  const navContainerClass = `rounded-full transition-all duration-500 overflow-hidden ${
+    scrolled ? "liquid-glass shadow-[0_20px_50px_rgba(0,0,0,0.5)] border-[#915eff]/30" : "bg-white/[0.03] border-white/10"
+  }`;
 
   return (
     <nav
-      className={`${styles.paddingX} fixed top-0 z-50 flex w-full items-center py-5`}
+      className={`${styles.paddingX} fixed top-0 z-50 flex w-full items-center py-16 sm:py-5 layer-promote gpu-accel transition-all duration-300`}
     >
       {/* Scroll Progress Bar with Glow */}
       <div className="absolute top-0 left-0 w-full h-[2px] bg-white/5 opacity-50" />
@@ -116,17 +126,18 @@ const Navbar = () => {
             />
           </div>
           <div className="hidden sm:block">
-            <p className="cursor-none text-[15px] font-black tracking-tight text-foreground group-hover:text-cyan-300 transition-colors">
+            <p className="text-[15px] font-black tracking-tight text-foreground group-hover:text-cyan-300 transition-colors">
               {t.html.fullName}
             </p>
-            <p className="text-[10px] font-bold tracking-[0.2em] text-[#915eff] opacity-60">
-              SOFTWARE ARCHITECT
+            <p className="text-[10px] font-bold tracking-[0.2em] text-[#915eff] opacity-80 uppercase font-mono relative overflow-hidden group/role">
+              SOFTWARE DEVELOPER
+              <span className="absolute inset-x-0 h-full w-full bg-gradient-to-b from-transparent via-[#915eff]/20 to-transparent animate-role-scanner pointer-events-none" />
             </p>
           </div>
         </Link>
-
+ 
         {/* Desktop Navigation */}
-        <div className={glassPill("hidden sm:flex px-6 py-2 gap-2")}>
+        <div className={`${navContainerClass} hidden sm:flex px-6 py-2 gap-2 glass-shimmer`}>
           <ul className="list-none flex flex-row items-center gap-2">
             {navLinks.map((nav: any) => (
               <NavLink 
@@ -147,7 +158,7 @@ const Navbar = () => {
         <div className="sm:hidden flex flex-1 justify-end items-center gap-4">
           <LanguageSwitcher />
           <div 
-            className={glassPill("p-3 cursor-none flex items-center justify-center shadow-lg active:scale-90")}
+            className={`${navContainerClass} p-3 flex items-center justify-center shadow-lg active:scale-90`}
             onClick={() => setToggle(!toggle)}
           >
             <img
@@ -167,13 +178,15 @@ const Navbar = () => {
                   onClick={() => setToggle(false)}
                   className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[90]"
                 />
-                <motion.div
-                  initial={{ x: "100%" }}
-                  animate={{ x: 0 }}
-                  exit={{ x: "100%" }}
-                  transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                  className="fixed right-0 top-0 h-screen w-[85%] max-w-[400px] bg-[#050510] border-l border-white/10 z-[100] p-10 flex flex-col pt-24"
-                >
+        <motion.div
+          initial={{ x: "100%" }}
+          animate={{ x: 0 }}
+          exit={{ x: "100%" }}
+          transition={{ type: "spring", damping: 28, stiffness: 180 }}
+          className="fixed right-0 top-0 h-screen w-[85%] max-w-[400px] bg-[#050510]/95 backdrop-blur-2xl border-l border-white/5 z-[100] p-10 flex flex-col pt-24 shadow-[-20px_0_60px_rgba(0,0,0,0.5)]"
+        >
+          {/* MOBILE HUD ACCENT */}
+          <div className="absolute right-0 top-1/2 -translate-y-1/2 h-40 w-[2px] bg-gradient-to-b from-transparent via-[#915eff] to-transparent opacity-40 shadow-[0_0_15px_#915eff]" />
                   <ul className="list-none flex flex-col gap-8">
                     {navLinks.map((nav: any) => (
                       <li

@@ -18,53 +18,59 @@ const ExperienceCard: React.FC<TExperience> = ({
   title,
   companyName,
   icon,
-  iconBg,
   date,
   points,
 }) => {
   return (
     <VerticalTimelineElement
       contentStyle={{
-        background: "rgba(29, 24, 54, 0.6)",
+        background: "rgba(10, 10, 24, 0.95)",
         color: "#fff",
-        boxShadow: "0 20px 50px rgba(0, 0, 0, 0.4), inset 0 0 30px rgba(145, 94, 255, 0.05)",
-        borderRadius: "32px",
-        border: "1px solid rgba(145, 94, 255, 0.2)",
-        backdropFilter: "blur(12px)",
+        boxShadow: "0 10px 40px rgba(0, 0, 0, 0.5)",
+        borderRadius: "28px",
+        border: "1px solid rgba(145, 94, 255, 0.25)",
       }}
+      className="glass-glint-container will-change-transform"
       contentArrowStyle={{
-        borderRight: "7px solid rgba(145, 94, 255, 0.2)",
+        borderRight: "7px solid rgba(145, 94, 255, 0.25)",
       }}
       date={date}
       iconStyle={{ 
-        background: iconBg,
-        boxShadow: "0 0 0 4px rgba(145, 94, 255, 0.4), 0 0 20px rgba(145, 94, 255, 0.3)",
+        background: "#050510",
+        boxShadow: "0 0 0 3px rgba(145, 94, 255, 0.4)",
       }}
       icon={
-        <div className="flex h-full w-full items-center justify-center p-[2px]">
+        <div className="flex h-full w-full items-center justify-center p-[4px]">
           <img
             src={icon}
             alt={companyName}
-            className="h-full w-full rounded-full object-contain brightness-125 transition-transform hover:scale-110"
+            className="h-full w-full rounded-full object-contain brightness-110"
+            style={{ filter: 'contrast(1.1) drop-shadow(0 0 5px rgba(145,94,255,0.4))' }}
           />
         </div>
       }
     >
+      {/* HUD Markers */}
+      <div className="hud-corner-marker top-left opacity-30" />
+      <div className="hud-corner-marker top-right opacity-30" />
+      <div className="hud-corner-marker bottom-left opacity-30" />
+      <div className="hud-corner-marker bottom-right opacity-30" />
+
       <div>
-        <h3 className="text-[22px] font-bold text-foreground">{title}</h3>
+        <h3 className="text-[20px] font-bold text-white tracking-tight">{title}</h3>
         <p
-          className="text-secondary text-[16px] font-semibold"
+          className="text-[#915eff] text-[15px] font-bold uppercase tracking-wider"
           style={{ margin: 0 }}
         >
           {companyName}
         </p>
       </div>
 
-      <ul className="ml-5 mt-5 list-disc space-y-2">
+      <ul className="ml-5 mt-5 list-disc space-y-3">
         {points.map((point, index) => (
           <li
             key={`experience-point-${index}`}
-            className="text-foreground-secondary pl-1 text-[14px] tracking-wider"
+            className="text-secondary/90 pl-1 text-[13.5px] leading-relaxed tracking-wide"
           >
             {point}
           </li>
@@ -94,8 +100,13 @@ const Experience = () => {
         {t.sections.experience.lead}
       </motion.p>
 
-      <div className="mt-20 flex flex-col">
-        <VerticalTimeline animate={true} lineColor="#915eff33">
+      <div className="mt-16 flex flex-col relative overflow-hidden">
+        {/* Optimized Data-Stream Background for Timeline */}
+        <div className="absolute left-[50%] top-0 bottom-0 w-px bg-[#915eff]/10 -translate-x-1/2 overflow-hidden sm:block hidden">
+          <div className="absolute top-0 h-24 w-full bg-cyan-400/30 animate-hitech-scan will-change-transform" style={{ animationDuration: '4s' }} />
+        </div>
+
+        <VerticalTimeline animate={false} lineColor="rgba(145, 94, 255, 0.15)">
           {experiences.map((experience, index) => (
             <ExperienceCard key={`experience-${index}`} {...experience} />
           ))}
@@ -105,4 +116,5 @@ const Experience = () => {
   );
 };
 
-export default SectionWrapper(Experience, "work");
+const MemoizedExperience = React.memo(Experience);
+export default SectionWrapper(MemoizedExperience, "work");

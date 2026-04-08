@@ -1,8 +1,4 @@
 import logo from "./logo.png";
-import backend from "./backend.png";
-import creator from "./creator.png";
-import mobile from "./mobile.png";
-import web from "./web.png";
 import github from "./github.png";
 import menu from "./menu.svg";
 import close from "./close.svg";
@@ -22,20 +18,14 @@ import typescript from "./tech/typescript.png";
 import threejs from "./tech/threejs.svg";
 import csharp from "./tech/csharp.svg";
 
-import meta from "./company/meta.png";
-import shopify from "./company/shopify.png";
-import starbucks from "./company/starbucks.png";
 import banuyazilimToplulugu from "./company/banuyazilim-toplulugu.png";
-import tesla from "./company/tesla.png";
+import bandirmaUniversity from "./company/bandirma-onyedi-eylul-university.png";
 
 import portfolioWebsite from "./portfolio_website.png";
+import profile from "./profile.jpg";
 
 export {
   logo,
-  backend,
-  creator,
-  mobile,
-  web,
   github,
   menu,
   close,
@@ -53,10 +43,10 @@ export {
   typescript,
   threejs,
   csharp,
-  meta,
-  shopify,
-  starbucks,
   banuyazilimToplulugu,
-  tesla,
+  bandirmaUniversity,
   portfolioWebsite,
+  profile,
 };
+
+

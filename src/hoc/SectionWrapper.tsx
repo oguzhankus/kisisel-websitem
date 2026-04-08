@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import React, { useState, useEffect, useRef } from "react";
 
 import { styles } from "../constants/styles";
 
@@ -12,35 +13,55 @@ const SectionWrapper = (
   idName: Props["idName"]
 ) =>
   function HOC() {
+    const [shouldRender, setShouldRender] = useState(false);
+    const ref = useRef<HTMLElement>(null);
+
+    useEffect(() => {
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          setShouldRender(entry.isIntersecting);
+        },
+        { rootMargin: "800px" } // Pre-load or unload at a safe distance
+      );
+
+      if (ref.current) observer.observe(ref.current);
+      return () => {
+        if (ref.current) observer.unobserve(ref.current);
+      };
+    }, []);
+
     return (
       <motion.section
-        initial={{ opacity: 0, y: 100 }}
-        whileInView={{ opacity: 1, y: 0 }}
+        ref={ref}
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
         transition={{
-          duration: 0.8,
-          ease: [0.22, 1, 0.36, 1],
-          delay: 0.1,
+          duration: 0.4,
+          ease: "easeOut",
         }}
-        viewport={{ once: true, amount: 0.15 }}
-        className={`${styles.padding} relative z-0 mx-auto max-w-7xl overflow-hidden`}
+        viewport={{ once: true, amount: 0.05 }}
+        className={`${styles.padding} relative z-0 mx-auto max-w-7xl`}
+        style={{ 
+          contain: "paint layout",
+          contentVisibility: "auto",
+          minHeight: "400px" 
+        }}
         id={idName}
       >
-        <div className="ambient-orb -left-20 -top-20 h-64 w-64 bg-[#915eff]" />
-        <div className="ambient-orb -right-20 -bottom-20 h-64 w-64 bg-[#06b6d4] [animation-delay:2s]" />
-        
-        {/* Parallax Platforms */}
-        <div className="absolute -left-10 top-1/4 h-32 w-32 rounded-3xl bg-white/5 blur-2xl transition-transform duration-1000 group-hover:translate-y-5" />
-        {/* Technical Viewfinders */}
-        <div className="absolute left-6 top-6 h-4 w-4 border-l-2 border-t-2 border-[#915effb0]" />
-        <div className="absolute right-6 top-6 h-4 w-4 border-r-2 border-t-2 border-[#915effb0]" />
-        <div className="absolute bottom-6 left-6 h-4 w-4 border-b-2 border-l-2 border-[#915effb0]" />
-        <div className="absolute bottom-6 right-6 h-4 w-4 border-b-2 border-r-2 border-[#915effb0]" />
+        {/* Technical Viewfinders - Lightweight Visual Details */}
+        <div className="absolute left-6 top-6 h-4 w-4 border-l-2 border-t-2 border-[#915eff40]" />
+        <div className="absolute right-6 top-6 h-4 w-4 border-r-2 border-t-2 border-[#915eff40]" />
+        <div className="absolute bottom-6 left-6 h-4 w-4 border-b-2 border-l-2 border-[#915eff40]" />
+        <div className="absolute bottom-6 right-6 h-4 w-4 border-b-2 border-r-2 border-[#915eff40]" />
 
         <span className="hash-span" id={idName}>
           &nbsp;
         </span>
 
-        <Component />
+        {/* 'Alive but Dormant' Rendering Path - Pre-Mounts the engine but prevents render overhead */}
+        <div className={shouldRender ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}>
+          <Component />
+        </div>
       </motion.section>
     );
   };

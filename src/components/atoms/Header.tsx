@@ -76,6 +76,14 @@ export const Header: React.FC<IHeader> = ({ useMotion, p, h2 }) => {
             {word}
           </motion.span>
         ))}
+
+        {/* CINEMATIC UNDERLINE GLOW */}
+        <motion.div
+           initial={{ width: 0, opacity: 0 }}
+           whileInView={{ width: "60px", opacity: 1 }}
+           transition={{ duration: 1, delay: 0.8 }}
+           className="absolute -bottom-2 left-0 h-[3px] rounded-full bg-gradient-to-r from-[#915eff] to-transparent shadow-[0_0_15px_rgba(145,94,255,0.5)]"
+        />
       </motion.h2>
     </div>
   );

@@ -1,5 +1,5 @@
 import { motion, useInView } from "framer-motion";
-import { useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { SectionWrapper } from "../../hoc";
 import { fadeIn } from "../../utils/motion";
 import { config } from "../../constants/config";
@@ -76,10 +76,12 @@ const Contact = () => {
           <div className="flex flex-wrap gap-5 mt-2 transition-all">
             <button
               type="submit"
-              className="group relative w-fit overflow-hidden rounded-full bg-gradient-to-r from-white to-[#e8e6ff] px-10 py-4 text-[15px] font-black uppercase tracking-widest text-slate-900 shadow-[0_15px_40px_rgba(145,94,255,0.3)] transition-all hover:scale-[1.03] active:scale-95"
+              className="group relative w-fit overflow-hidden rounded-full bg-white px-10 py-4 text-[14px] font-black uppercase tracking-[0.2em] text-slate-900 shadow-[0_15px_40px_rgba(145,94,255,0.25)] transition-all hover:scale-[1.04] active:scale-95"
             >
-              <span className="relative z-10">{language === "tr" ? "Gönder" : "Send"}</span>
-              <div className="absolute inset-0 z-0 h-full w-full translate-x-[-100%] bg-gradient-to-r from-cyan-400 to-transparent transition-transform duration-500 group-hover:translate-x-[0%]" />
+              <div className="absolute inset-0 z-0 h-full w-full bg-gradient-to-r from-cyan-400 via-[#915eff] to-cyan-400 bg-[length:200%_auto] opacity-0 transition-opacity duration-500 group-hover:opacity-100 group-hover:animate-text-gradient" />
+              <span className="relative z-10 group-hover:text-white transition-colors duration-300">
+                {language === "tr" ? "İletişimi Başlat" : "Start Contact"}
+              </span>
             </button>
 
             <button
@@ -93,16 +95,16 @@ const Contact = () => {
           </div>
         </form>
 
-        <div className="mt-12 flex flex-wrap gap-8 pt-10 border-t border-white/5">
-          <div className="flex flex-col gap-2">
+        <div className="mt-12 flex flex-wrap justify-center gap-x-12 gap-y-8 pt-10 border-t border-white/5 text-center">
+          <div className="flex flex-col gap-2 min-w-[120px]">
             <p className="text-[11px] font-black uppercase tracking-widest text-secondary/60">{language === "tr" ? "Yanıt Süresi" : "Response Time"}</p>
             <p className="text-[14px] font-bold text-cyan-400">~24 {language === "tr" ? "Saat" : "Hours"}</p>
           </div>
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-2 min-w-[120px]">
             <p className="text-[11px] font-black uppercase tracking-widest text-secondary/60">WhatsApp</p>
             <a href={`https://wa.me/${t.html.phone.replace(/\s+/g, '')}`} target="_blank" rel="noreferrer" className="text-[14px] font-bold text-white tracking-widest hover:text-[#915eff] transition-colors">{t.html.phone}</a>
           </div>
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-2 min-w-[120px]">
             <p className="text-[11px] font-black uppercase tracking-widest text-secondary/60">LinkedIn</p>
             <a href={t.html.socials.linkedin} target="_blank" rel="noreferrer" className="text-[14px] font-bold text-white tracking-widest hover:text-cyan-400 transition-colors">{language === "tr" ? "Profil" : "Profile"}</a>
           </div>
@@ -122,4 +124,5 @@ const Contact = () => {
   );
 };
 
-export default SectionWrapper(Contact, "contact");
+const MemoizedContact = React.memo(Contact);
+export default SectionWrapper(MemoizedContact, "contact");
