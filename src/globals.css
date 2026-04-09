@@ -572,6 +572,16 @@ a, button, input, textarea, [role="button"] {
 }
 
 /* Zenith Visual Utilities - Optimized for Zero-Lag (Blur Removed for Stability) */
+.experience-date-offset {
+  margin-top: 38px !important;
+}
+
+@media only screen and (max-width: 1169px) {
+  .experience-date-offset {
+    margin-top: 10px !important;
+  }
+}
+
 .liquid-glass {
   background: rgba(5, 5, 10, 0.94); /* Higher opacity instead of blur */
   border: 1px solid rgba(255, 255, 255, 0.1);

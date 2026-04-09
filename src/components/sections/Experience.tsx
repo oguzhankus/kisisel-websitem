@@ -35,6 +35,7 @@ const ExperienceCard: React.FC<TExperience> = ({
         borderRight: "7px solid rgba(145, 94, 255, 0.25)",
       }}
       date={date}
+      dateClassName="experience-date-offset"
       iconStyle={{ 
         background: "transparent",
         boxShadow: "none",
@@ -44,35 +45,24 @@ const ExperienceCard: React.FC<TExperience> = ({
         overflow: "visible",
       }}
       icon={
-        <div className="relative flex h-full w-full items-center justify-center">
-          {/* Cyber-Crystal Geometric Base (Hexagon) */}
-          <div className="absolute inset-[-6px] bg-gradient-to-br from-[#915eff] via-cyan-400 to-[#915eff] opacity-40 animate-pulse" 
-               style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }} 
-          />
-          
-          <div className="relative z-10 flex h-[90%] w-[90%] items-center justify-center bg-[#050510]/90 backdrop-blur-xl shadow-[inset_0_0_20px_rgba(145,94,255,0.3)]"
-               style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }}
-          >
-            {/* Internal Holographic Scan-Line */}
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#915eff]/40 to-transparent h-1/4 w-full animate-hitech-scan pointer-events-none z-20" />
-            
-            {/* Data-Node Sparkles */}
-            <div className="absolute top-2 left-1/2 -translate-x-1/2 h-1 w-1 rounded-full bg-white shadow-[0_0_8px_#fff] animate-ping" />
-            
+        <div className="relative flex h-full w-full items-center justify-center pointer-events-none">
+          {/* Reverted Hitech Energy Ring - Optimized for non-clipping */}
+          <div className="absolute inset-[1px] rounded-full border border-cyan-400/30 shadow-[0_0_15px_rgba(34,211,238,0.3)] animate-pulse" />
+          <div className="absolute inset-[-2px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+             <div className="absolute inset-0 rounded-full border border-[#915eff]/30 animate-spin-slow" style={{ animationDuration: '3s' }} />
+          </div>
+
+          <div className="relative z-10 flex h-full w-full items-center justify-center p-2">
             <img
               src={icon}
               alt={companyName}
-              className="relative z-10 h-[65%] w-[65%] object-contain rounded-full brightness-125 transition-all duration-500 group-hover:scale-110"
+              className="h-full w-full object-contain rounded-full brightness-125 transition-all duration-500 group-hover:scale-110"
               style={{ 
                 mixBlendMode: 'lighten',
                 filter: 'contrast(1.2) brightness(1.3) drop-shadow(0 0 10px rgba(145,94,255,0.6))' 
               }}
             />
           </div>
-
-          {/* Neural Connector Threads (Visual Only) */}
-          <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-[2px] h-4 bg-gradient-to-t from-cyan-400/50 to-transparent" />
-          <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-[2px] h-4 bg-gradient-to-b from-[#915eff]/50 to-transparent" />
         </div>
       }
     >

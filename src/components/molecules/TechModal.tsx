@@ -18,20 +18,20 @@ const TechModal: React.FC<TechModalProps> = ({ activeTech, onClose, language, de
 
   return createPortal(
     <motion.div
-      key="tech-modal"
+      key={`tech-modal-${activeTech}`}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/80 backdrop-blur-xl p-4 sm:p-6"
+      className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/90 backdrop-blur-md p-4 sm:p-6 sm:backdrop-blur-xl"
       onClick={onClose}
     >
       <motion.div
-        initial={{ opacity: 0, scale: 0.9, y: 30 }}
+        initial={{ opacity: 0, scale: 0.95, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
-        exit={{ opacity: 0, scale: 0.9, y: 30 }}
-        transition={{ type: "spring", damping: 25, stiffness: 350 }}
+        exit={{ opacity: 0, scale: 0.95, y: 20 }}
+        transition={{ type: "spring", damping: 25, stiffness: 400 }}
         onClick={(e) => e.stopPropagation()}
-        className="relative w-full max-w-md overflow-hidden rounded-[32px] border border-white/10 bg-surface-deep/95 p-8 shadow-[0_30px_100px_rgba(0,0,0,0.8),inset_0_0_40px_rgba(145,94,255,0.1)] backdrop-blur-3xl"
+        className="relative w-full max-w-md overflow-hidden rounded-[32px] border border-white/10 bg-surface-deep/98 p-8 shadow-[0_30px_100px_rgba(0,0,0,0.8)] backdrop-blur-none sm:backdrop-blur-3xl"
       >
         {/* Dynamic Illuminations */}
         <div className="pointer-events-none absolute -left-20 -top-20 h-64 w-64 rounded-full bg-[#915eff]/20 blur-[80px]" />

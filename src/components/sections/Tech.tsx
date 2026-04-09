@@ -97,10 +97,10 @@ const Tech = () => {
         ))}
       </div>
 
-      {/* Ultra Premium Tech Modal */}
-      <AnimatePresence>
+      <AnimatePresence mode="wait">
         {activeTech && (
           <TechModal 
+            key={activeTech}
             activeTech={activeTech} 
             onClose={() => setActiveTech(null)} 
             language={language}
