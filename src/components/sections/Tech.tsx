@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { TechModal } from "..";
 
 import { SectionWrapper } from "../../hoc";
 import { technologies } from "../../constants";
@@ -41,16 +42,19 @@ const Tech = () => {
         {technologies.map((technology, i) => (
           <motion.div
             key={technology.name}
-            initial={{ opacity: 0, y: 22 }}
+            initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.35 }}
+            viewport={{ once: true, amount: 0.2 }}
             transition={{
-              delay: i * 0.07,
-              duration: 0.5,
-              ease: [0.22, 1, 0.36, 1],
+              delay: i * 0.05,
+              duration: 0.6,
+              ease: "easeOut",
             }}
             className="group relative flex h-56 w-full max-w-[220px] cursor-pointer flex-col items-center gap-1 sm:h-64 sm:gap-2"
-            onClick={() => setActiveTech(technology.name)}
+            onClick={(e) => {
+              e.stopPropagation();
+              setActiveTech(technology.name);
+            }}
           >
             <div className="relative overflow-hidden flex h-full w-full flex-col items-center justify-center gap-4 rounded-[32px] border border-white/10 bg-surface-deep/60 py-8 shadow-[0_15px_40px_-10px_rgba(145,94,255,0.15)] transition-all duration-300 group-hover:bg-surface-deep/80 group-hover:border-[#915eff]/40 group-hover:shadow-[0_20px_50px_-10px_rgba(145,94,255,0.3)]">
               {/* Radial Glow on Hover */}
@@ -96,50 +100,12 @@ const Tech = () => {
       {/* Ultra Premium Tech Modal */}
       <AnimatePresence>
         {activeTech && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 p-4 backdrop-blur-md"
-            onClick={() => setActiveTech(null)}
-          >
-            {/* Modal Container */}
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0, y: 20 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.9, opacity: 0, y: 20 }}
-              transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              onClick={(e) => e.stopPropagation()}
-              className="relative w-full max-w-md overflow-hidden rounded-[32px] border border-white/10 bg-surface-deep/90 p-8 shadow-[0_30px_80px_rgba(0,0,0,0.5),inset_0_0_40px_rgba(145,94,255,0.1)] backdrop-blur-2xl"
-            >
-              {/* Dynamic Illuminations */}
-              <div className="pointer-events-none absolute -left-20 -top-20 h-64 w-64 rounded-full bg-[#915eff]/20 blur-[80px]" />
-              <div className="pointer-events-none absolute -bottom-20 -right-20 h-64 w-64 rounded-full bg-cyan-400/10 blur-[80px]" />
-              
-              <div className="relative z-10 flex flex-col items-center text-center">
-                {/* 2D Logo Extraction for Modal */}
-                <div className="mb-6 relative flex h-24 w-24 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.04] p-5 shadow-[0_0_30px_rgba(145,94,255,0.2)] overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#915eff]/30 to-transparent h-10 w-full animate-hitech-scan pointer-events-none" />
-                  <img src={technologies.find(tech => tech.name === activeTech)?.icon} alt={activeTech} className="h-full w-full object-contain drop-shadow-[0_0_12px_rgba(255,255,255,0.3)] relative z-10" />
-                </div>
-                
-                <h3 className="mb-4 bg-gradient-to-r from-white via-[#e879f9] to-cyan-300 bg-clip-text text-3xl font-black text-transparent drop-shadow-[0_0_15px_rgba(145,94,255,0.5)]">
-                  {activeTech}
-                </h3>
-                
-                <p className="text-[15px] leading-relaxed text-secondary sm:text-[16px] sm:leading-[1.8] font-medium">
-                  {t.details[activeTech] || ""}
-                </p>
-                
-                <button
-                  onClick={() => setActiveTech(null)}
-                  className="mt-8 rounded-full border border-white/10 bg-white/[0.05] px-8 py-3 text-[13px] font-bold tracking-widest text-[#915eff] transition-all hover:bg-[#915eff]/10 hover:border-[#915eff]/50 hover:shadow-[0_0_20px_rgba(145,94,255,0.2)] uppercase"
-                >
-                  {language === "tr" ? "Kapat" : "Close"}
-                </button>
-              </div>
-            </motion.div>
-          </motion.div>
+          <TechModal 
+            activeTech={activeTech} 
+            onClose={() => setActiveTech(null)} 
+            language={language}
+            details={t.details}
+          />
         )}
       </AnimatePresence>
     </>

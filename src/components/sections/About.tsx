@@ -45,7 +45,7 @@ const ServiceCard: React.FC<IServiceCard> = ({ index, title, icon, description }
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-      variants={fadeIn("right", "spring", index * 0.4, 0.75)}
+      variants={fadeIn("up", "spring", index * 0.2, 0.75)}
       className="w-full max-w-[280px] xs:w-[280px] group gpu-accel"
     >
       <div className="relative h-full rounded-[30px] border border-white/5 bg-surface-deep/90 p-[1px] shadow-[0_25px_80px_rgba(0,0,0,0.2)] transition-all duration-300 hover:border-[#915eff]/30 overflow-hidden">
@@ -64,22 +64,22 @@ const ServiceCard: React.FC<IServiceCard> = ({ index, title, icon, description }
           <div className="pointer-events-none absolute -top-[1px] left-[15%] h-[1px] w-[70%] bg-gradient-to-r from-transparent via-cyan-400/30 to-transparent transition-all duration-500 group-hover:via-cyan-400 group-hover:w-[80%]" />
 
           <div
-            className="relative z-10 mt-2 flex h-20 w-20 items-center justify-center rounded-2xl border border-white/10 bg-transparent shadow-[0_8px_32px_rgba(0,0,0,0.2)] transition-all duration-500 group-hover:scale-110 group-hover:border-[#915eff]/30"
+            className="relative z-10 mt-2 flex h-20 w-20 items-center justify-center rounded-2xl border border-white/10 bg-transparent shadow-[0_8px_32px_rgba(0,0,0,0.2)] transition-all duration-500 group-hover:scale-110 group-hover:border-[#915eff]/30 p-2"
             style={{ transform: "translateZ(45px)" }}
           >
-            <img 
-              src={icon} 
-              alt={title} 
-              className="h-14 w-14 object-contain drop-shadow-[0_0_15px_rgba(145,94,255,0.4)] transition-all duration-500 group-hover:scale-110 group-hover:drop-shadow-[0_0_20px_rgba(145,94,255,0.6)]" 
-              style={{ mixBlendMode: 'screen', filter: 'brightness(1.2) contrast(1.2)' }} 
+            <img
+              src={icon}
+              alt={title}
+              className="h-full w-full object-contain rounded-full drop-shadow-[0_0_15px_rgba(145,94,255,0.4)] transition-all duration-500 group-hover:scale-110 group-hover:drop-shadow-[0_0_20px_rgba(145,94,255,0.6)]"
+              style={{ mixBlendMode: 'lighten', filter: 'brightness(1.3) contrast(1.1)' }}
             />
             <div className="absolute -bottom-2 h-[2px] w-10 bg-[#915eff] blur-[4px] opacity-0 group-hover:opacity-100 transition-opacity" />
           </div>
-          
+
           <h3 className="mt-8 text-center text-[19px] font-black leading-tight text-white group-hover:text-cyan-400 transition-colors" style={{ transform: "translateZ(35px)" }}>
             {title}
           </h3>
-          
+
           <p className="mt-5 text-center text-[13px] leading-6 text-secondary opacity-70 group-hover:opacity-100 transition-opacity" style={{ transform: "translateZ(25px)" }}>
             {description}
           </p>
@@ -88,10 +88,10 @@ const ServiceCard: React.FC<IServiceCard> = ({ index, title, icon, description }
           <div className="mt-auto w-full pt-8 relative overflow-hidden" style={{ transform: "translateZ(15px)" }}>
             <div className="flex w-full items-center justify-between gap-4">
               <div className="relative h-[2px] flex-1 overflow-hidden rounded-full bg-white/5">
-                <motion.div 
+                <motion.div
                   animate={{ x: ["-100%", "100%"] }}
                   transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-                  className="absolute inset-0 h-full w-full bg-gradient-to-r from-transparent via-[#915eff] to-cyan-400" 
+                  className="absolute inset-0 h-full w-full bg-gradient-to-r from-transparent via-[#915eff] to-cyan-400"
                 />
               </div>
               <span className="text-[20px] font-black tracking-widest text-[#915eff] animate-pulse drop-shadow-[0_0_8px_rgba(145,94,255,0.4)]">
@@ -108,7 +108,7 @@ const ServiceCard: React.FC<IServiceCard> = ({ index, title, icon, description }
 const Counter = ({ value }: { value: string }) => {
   const ref = useRef<HTMLSpanElement>(null);
   const isInView = useInView(ref, { once: true, amount: 0.5 });
-  
+
   // Logic: Only animate if the value contains a percentage (100%)
   const shouldAnimate = value.includes("%");
 
@@ -211,43 +211,43 @@ const About = () => {
 
               {/* ADVANCED REFINED HUD - T-INTERSECT ARCHITECTURE */}
               <div className="pointer-events-none absolute left-0 top-0 z-[40] opacity-0 transition-opacity group-hover:opacity-100 p-2">
-                 <div className="h-6 w-[2px] bg-[#915eff]" />
-                 <div className="absolute left-2 top-2 h-[2px] w-6 bg-[#915eff]" />
-                 <div className="absolute left-2 top-2 h-1.5 w-1.5 rounded-full bg-cyan-400/50" />
+                <div className="h-6 w-[2px] bg-[#915eff]" />
+                <div className="absolute left-2 top-2 h-[2px] w-6 bg-[#915eff]" />
+                <div className="absolute left-2 top-2 h-1.5 w-1.5 rounded-full bg-cyan-400/50" />
               </div>
               <div className="pointer-events-none absolute right-0 top-0 z-[40] opacity-0 transition-opacity group-hover:opacity-100 p-2">
-                 <div className="h-6 w-[2px] absolute right-2 bg-[#915eff]" />
-                 <div className="h-[2px] w-6 absolute right-2 top-2 bg-[#915eff]" />
+                <div className="h-6 w-[2px] absolute right-2 bg-[#915eff]" />
+                <div className="h-[2px] w-6 absolute right-2 top-2 bg-[#915eff]" />
               </div>
               <div className="pointer-events-none absolute bottom-0 left-0 z-[40] opacity-0 transition-opacity group-hover:opacity-100 p-2">
-                 <div className="h-6 w-[2px] absolute bottom-2 bg-[#915eff]" />
-                 <div className="h-[2px] w-6 absolute bottom-2 left-2 bg-[#915eff]" />
+                <div className="h-6 w-[2px] absolute bottom-2 bg-[#915eff]" />
+                <div className="h-[2px] w-6 absolute bottom-2 left-2 bg-[#915eff]" />
               </div>
               <div className="pointer-events-none absolute bottom-0 right-0 z-[40] opacity-0 transition-opacity group-hover:opacity-100 p-2">
-                 <div className="h-6 w-[2px] absolute bottom-2 right-2 bg-[#915eff]" />
-                 <div className="h-[2px] w-6 absolute bottom-2 right-2 bg-[#915eff]" />
+                <div className="h-6 w-[2px] absolute bottom-2 right-2 bg-[#915eff]" />
+                <div className="h-[2px] w-6 absolute bottom-2 right-2 bg-[#915eff]" />
               </div>
 
               {/* PULSING ENERGY RING - THIN GLOWING FRAME */}
               <div className="pointer-events-none absolute inset-0 z-[35] p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-1000">
-                 <div className="h-full w-full rounded-[28px] border border-cyan-400/20 shadow-[inset_0_0_20px_rgba(34,211,238,0.1)] animate-pulse" />
+                <div className="h-full w-full rounded-[28px] border border-cyan-400/20 shadow-[inset_0_0_20px_rgba(34,211,238,0.1)] animate-pulse" />
               </div>
 
               {/* PRISM SCAN BEAM - HIGH CONTRAST */}
               <div className="absolute inset-x-[-150%] inset-y-[-150%] opacity-0 group-hover:opacity-100 transition-opacity duration-1000">
-                 <div className="absolute inset-0 bg-[conic-gradient(from_0deg,transparent_0%,transparent_45%,#915eff_60%,transparent_70%,transparent_100%)] animate-spin-slow" />
+                <div className="absolute inset-0 bg-[conic-gradient(from_0deg,transparent_0%,transparent_45%,#915eff_60%,transparent_70%,transparent_100%)] animate-spin-slow" />
               </div>
 
               <div className="relative z-10 overflow-hidden rounded-[30px] bg-[#050510]">
                 {/* NEURAL GRID OVERLAY (BREATHING DOT MATRIX) */}
                 <div className="pointer-events-none absolute inset-0 z-20 opacity-0 group-hover:opacity-[0.1] transition-opacity duration-1000 dot-matrix animate-pulse" />
-                
-                <img 
-                  src={profile} 
+
+                <img
+                  src={profile}
                   alt={language === "tr" ? "Oguzhan Portre" : "Oguzhan Portrait"}
-                  className="h-full w-full object-cover transition-all duration-1000 group-hover:scale-105" 
+                  className="h-full w-full object-cover transition-all duration-1000 group-hover:scale-105"
                 />
-                
+
                 {/* INTERACTIVE GLINT SHIMMER */}
                 <div className="absolute inset-0 z-30 pointer-events-none bg-gradient-to-r from-transparent via-white/10 to-transparent animate-glint" />
 
@@ -260,7 +260,7 @@ const About = () => {
         {/* Vision & Bio Module - Zenith Evolution */}
         <div className="relative z-10 flex-1 rounded-[32px] border border-white/5 bg-[#050510]/20 p-7 sm:p-10 shadow-inner shadow-black/20 flex flex-col justify-center">
           <div className="pointer-events-none absolute -left-8 -top-8 h-32 w-32 rounded-full bg-[radial-gradient(circle_at_center,rgba(145,94,255,0.06)_0%,transparent_70%)]" />
-          
+
           {/* VISION HEADER - CINEMATIC GRADIENT */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
@@ -268,10 +268,10 @@ const About = () => {
             transition={{ duration: 0.8, delay: 0.3 }}
             className="mb-6"
           >
-             <h3 className="animate-text-gradient bg-gradient-to-r from-white via-[#915eff] to-cyan-400 bg-clip-text text-[24px] font-black tracking-tight text-transparent sm:text-[32px] lg:text-[36px]">
-               {language === "tr" ? "Mühendislik, Tasarım & Gelecek" : "Engineering, Design & Future"}
-             </h3>
-             <div className="mt-2 h-[2px] w-12 bg-gradient-to-r from-[#915eff] to-transparent" />
+            <h3 className="animate-text-gradient bg-gradient-to-r from-white via-[#915eff] to-cyan-400 bg-clip-text text-[24px] font-black tracking-tight text-transparent sm:text-[32px] lg:text-[36px]">
+              {language === "tr" ? "Mühendislik, Tasarım & Gelecek" : "Engineering, Design & Future"}
+            </h3>
+            <div className="mt-2 h-[2px] w-12 bg-gradient-to-r from-[#915eff] to-transparent" />
           </motion.div>
 
           <p className="text-foreground/90 text-[15px] font-medium leading-[1.8] sm:text-[18px] sm:leading-[1.9] lg:text-[19px]">
@@ -279,8 +279,8 @@ const About = () => {
           </p>
 
           <div className="mt-8 flex items-center gap-4">
-             <div className="h-[1px] flex-1 bg-gradient-to-r from-[#915eff]/20 to-transparent" />
-             <div className="h-1.5 w-1.5 rounded-full bg-[#915eff]/30" />
+            <div className="h-[1px] flex-1 bg-gradient-to-r from-[#915eff]/20 to-transparent" />
+            <div className="h-1.5 w-1.5 rounded-full bg-[#915eff]/30" />
           </div>
         </div>
       </motion.div>

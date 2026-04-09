@@ -1,5 +1,6 @@
-import { motion } from "framer-motion";
-import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import React, { useState, useRef } from "react";
+import emailjs from "@emailjs/browser";
 import { SectionWrapper } from "../../hoc";
 import { fadeIn } from "../../utils/motion";
 import { config } from "../../constants/config";
@@ -11,6 +12,39 @@ const Contact = () => {
   const { language } = useLanguage();
   const t = config[language];
   const [copied, setCopied] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [formStatus, setFormStatus] = useState<"idle" | "success" | "error">("idle");
+  const formRef = useRef<HTMLFormElement>(null);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setFormStatus("idle");
+
+    if (!formRef.current) return;
+
+    emailjs
+      .sendForm(
+        "service_kfgsyex",
+        "template_qmqm1xe",
+        formRef.current,
+        "GAyiJEgoUJe2GzmdB"
+      )
+      .then(
+        () => {
+          setLoading(false);
+          setFormStatus("success");
+          formRef.current?.reset();
+          setTimeout(() => setFormStatus("idle"), 5000);
+        },
+        (error) => {
+          setLoading(false);
+          console.error(error);
+          setFormStatus("error");
+          setTimeout(() => setFormStatus("idle"), 5000);
+        }
+      );
+  };
 
   const handleCopyEmail = () => {
     navigator.clipboard.writeText(t.html.email);
@@ -34,7 +68,11 @@ const Contact = () => {
           </p>
         </div>
 
-        <form className="mt-12 flex flex-col gap-8">
+        <form
+          ref={formRef}
+          onSubmit={handleSubmit}
+          className="mt-12 flex flex-col gap-8"
+        >
           <label className="flex flex-col group">
             <span className="mb-4 text-[13px] font-black uppercase tracking-[0.25em] text-[#915effb0] group-focus-within:text-cyan-400 transition-colors">
               {language === "tr" ? "Adınız" : "Your Name"}
@@ -70,15 +108,32 @@ const Contact = () => {
               className="rounded-2xl border border-white/5 bg-white/[0.03] px-6 py-4 font-medium text-white outline-none transition-all placeholder:text-secondary/30 focus:border-[#915eff]/50 focus:bg-white/[0.06] focus:shadow-[0_0_25px_rgba(145,94,255,0.2)] resize-none"
             />
           </label>
-
+          <AnimatePresence>
+            {formStatus !== "idle" && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                className={`text-[13px] font-black uppercase tracking-widest ${formStatus === "success" ? "text-cyan-400" : "text-red-400"
+                  }`}
+              >
+                {formStatus === "success"
+                  ? (language === "tr" ? "Mesajınız Başarıyla Gönderildi!" : "Message Sent Successfully!")
+                  : (language === "tr" ? "Bir Hata Oluştu, Lütfen Tekrar Deneyin." : "An Error Occurred, Please Try Again.")}
+              </motion.div>
+            )}
+          </AnimatePresence>
           <div className="flex flex-wrap gap-5 mt-2 transition-all">
             <button
               type="submit"
-              className="group relative w-fit overflow-hidden rounded-full bg-white px-10 py-4 text-[14px] font-black uppercase tracking-[0.2em] text-slate-900 shadow-[0_15px_40px_rgba(145,94,255,0.25)] transition-all hover:scale-[1.04] active:scale-95"
+              disabled={loading}
+              className={`group relative w-fit overflow-hidden rounded-full bg-white px-10 py-4 text-[14px] font-black uppercase tracking-[0.2em] text-slate-900 shadow-[0_15px_40px_rgba(145,94,255,0.25)] transition-all hover:scale-[1.04] active:scale-95 ${loading ? 'opacity-70 cursor-not-allowed' : ''}`}
             >
               <div className="absolute inset-0 z-0 h-full w-full bg-gradient-to-r from-cyan-400 via-[#915eff] to-cyan-400 bg-[length:200%_auto] opacity-0 transition-opacity duration-500 group-hover:opacity-100 group-hover:animate-text-gradient" />
               <span className="relative z-10 group-hover:text-white transition-colors duration-300">
-                {language === "tr" ? "İletişimi Başlat" : "Start Contact"}
+                {loading
+                  ? (language === "tr" ? "Gönderiliyor..." : "Sending...")
+                  : (language === "tr" ? "İletişimi Başlat" : "Start Contact")}
               </span>
             </button>
 
@@ -100,7 +155,7 @@ const Contact = () => {
           </div>
           <div className="flex flex-col gap-2 min-w-[120px]">
             <p className="text-[11px] font-black uppercase tracking-widest text-secondary/60">WhatsApp</p>
-            <a href={`https://wa.me/${t.html.phone.replace(/\s+/g, '')}`} target="_blank" rel="noreferrer" className="text-[14px] font-bold text-white tracking-widest hover:text-[#915eff] transition-colors">{t.html.phone}</a>
+            <a href={`https://wa.me/${t.html.phone.replace(/\D/g, '').replace(/^0/, '90')}`} target="_blank" rel="noreferrer" className="text-[14px] font-bold text-white tracking-widest hover:text-[#915eff] transition-colors">{t.html.phone}</a>
           </div>
           <div className="flex flex-col gap-2 min-w-[120px]">
             <p className="text-[11px] font-black uppercase tracking-widest text-secondary/60">LinkedIn</p>

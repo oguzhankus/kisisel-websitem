@@ -16,6 +16,7 @@ import Contact from "./sections/Contact";
 import BackToTop from "./atoms/BackToTop";
 import CanvasLoader from "./layout/Loader";
 import ProjectModal from "./molecules/ProjectModal";
+import TechModal from "./molecules/TechModal";
 
 export {
   Hero,
@@ -29,6 +30,7 @@ export {
   BackToTop,
   CanvasLoader,
   ProjectModal,
+  TechModal,
   EarthCanvas,
   BallCanvas,
   ComputersCanvas,

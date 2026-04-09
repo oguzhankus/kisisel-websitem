@@ -52,20 +52,21 @@ export const Header: React.FC<IHeader> = ({ useMotion, p, h2 }) => {
         viewport={{ once: true, amount: 0.25 }}
         className={`${styles.sectionHeadText} mt-2 flex flex-wrap gap-x-3 drop-shadow-[0_0_15px_rgba(145,94,255,0.2)] relative`}
       >
-        {/* Digital Scan Line Effect */}
+        {/* Digital Scan Line Effect - Masterpiece Grade */}
         <motion.div
           animate={{ 
-            x: ["-100%", "200%"],
-            opacity: [0, 0.4, 0]
+            x: ["-100%", "250%"],
           }}
           transition={{ 
-            duration: 4, 
+            duration: 3, 
             repeat: Infinity, 
-            repeatDelay: 8,
+            repeatDelay: 10,
             ease: "easeInOut" 
           }}
-          className="absolute inset-y-0 w-32 bg-gradient-to-r from-transparent via-[#915eff]/10 to-transparent skew-x-[30deg] pointer-events-none z-[-1]"
-        />
+          className="absolute inset-y-0 w-48 bg-gradient-to-r from-transparent via-[#915eff]/15 to-transparent skew-x-[15deg] pointer-events-none z-[-1]"
+        >
+          <div className="absolute right-0 inset-y-0 w-[2px] bg-cyan-400 opacity-40 shadow-[0_0_15px_rgba(34,211,238,0.8)]" />
+        </motion.div>
 
         {words.map((word, i) => (
           <motion.span

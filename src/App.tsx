@@ -16,6 +16,8 @@ import { config } from "./constants/config";
 import { useLanguage } from "./context/LanguageContext";
 import { BackgroundLayer } from "./components/layout/BackgroundLayer";
 import { SocialSidebar } from "./components/atoms/SocialSidebar";
+import { BackgroundDecor } from "./components/atoms/BackgroundDecor";
+import { ScrollHUD } from "./components/atoms/ScrollHUD";
 import { useGLTF } from "@react-three/drei";
 
 // Ultimate Pre-loading - Ensures GPU textures are fetched immediately
@@ -34,6 +36,8 @@ const App = () => {
     <BrowserRouter>
       <div className="bg-primary text-foreground relative z-0 min-h-screen overflow-hidden transition-colors duration-300">
         <BackgroundLayer />
+        <BackgroundDecor />
+        <ScrollHUD />
         <SocialSidebar />
         <div className="hero-pattern-layer relative z-10 min-h-screen">
           <div className="light-hero-bg absolute inset-0 z-0 transition-opacity duration-500 opacity-20">

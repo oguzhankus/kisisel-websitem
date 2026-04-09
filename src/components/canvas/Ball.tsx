@@ -37,6 +37,7 @@ const Ball = (props: any) => {
       </mesh>
     </Float>
   );
+
 };
 
 const BallCanvas: React.FC<{ icon: string }> = ({ icon }) => {
@@ -46,23 +47,23 @@ const BallCanvas: React.FC<{ icon: string }> = ({ icon }) => {
   return (
     <div ref={containerRef} className="h-full w-full">
       {isInView && (
-    <Canvas
-      frameloop="demand" // Only render on change
-      dpr={1}
-      gl={{ 
-        preserveDrawingBuffer: false, 
-        powerPreference: "high-performance", 
-        antialias: false,
-        precision: "lowp"
-      }}
-    >
-      <Suspense fallback={<CanvasLoader />}>
-        <OrbitControls enablePan={false} enableZoom={false} />
-        <Ball imgUrl={icon} />
-      </Suspense>
+        <Canvas
+          frameloop="demand" // Only render on change
+          dpr={1}
+          gl={{
+            preserveDrawingBuffer: false,
+            powerPreference: "high-performance",
+            antialias: false,
+            precision: "lowp"
+          }}
+        >
+          <Suspense fallback={<CanvasLoader />}>
+            <OrbitControls enablePan={false} enableZoom={false} />
+            <Ball imgUrl={icon} />
+          </Suspense>
 
-      <Preload all />
-    </Canvas>
+          <Preload all />
+        </Canvas>
       )}
     </div>
   );

@@ -64,8 +64,8 @@ const ComputersCanvas = () => {
       >
         <Suspense fallback={<CanvasLoader />}>
           <OrbitControls
-            autoRotate={false}
-            autoRotateSpeed={0.32}
+            autoRotate={true}
+            autoRotateSpeed={1.0}
             enablePan={false}
             enableZoom={false}
             minPolarAngle={0} 

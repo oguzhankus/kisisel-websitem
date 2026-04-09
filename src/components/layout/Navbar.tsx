@@ -118,11 +118,11 @@ const Navbar = () => {
             window.scrollTo(0, 0);
           }}
         >
-          <div className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-[#1d1836] p-[2px] shadow-[0_0_15px_rgba(145,94,255,0.3)] overflow-hidden transition-all group-hover:border-[#915eff]/50 group-hover:shadow-[0_0_20px_rgba(145,94,255,0.5)]">
+          <div className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 shadow-[0_0_15px_rgba(145,94,255,0.3)] overflow-hidden transition-all group-hover:border-[#915eff]/50 group-hover:shadow-[0_0_20px_rgba(145,94,255,0.5)]">
             <img 
               src={logo} 
               alt="logo" 
-              className="h-full w-full rounded-full object-cover mix-blend-screen opacity-80 group-hover:opacity-100" 
+              className="h-full w-full rounded-full object-contain mix-blend-screen opacity-80 group-hover:opacity-100" 
             />
           </div>
           <div className="hidden sm:block">

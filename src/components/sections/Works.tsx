@@ -1,6 +1,6 @@
 import React from "react";
 import Tilt from "react-parallax-tilt";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 import { github } from "../../assets";
 import { SectionWrapper } from "../../hoc";
@@ -24,7 +24,7 @@ const ProjectCard: React.FC<{ index: number; onClick: () => void } & TProject> =
   const { language } = useLanguage();
   return (
     <motion.div 
-      variants={fadeIn("up", "spring", index * 0.4, 0.75)}
+      variants={fadeIn("up", "spring", index * 0.15, 1)}
       className="max-sm:w-full cursor-pointer"
       onClick={onClick}
     >
@@ -170,11 +170,15 @@ const Works = () => {
         ))}
       </div>
 
-      <ProjectModal 
-        project={selectedProject} 
-        onClose={() => setSelectedProject(null)} 
-        language={language}
-      />
+      <AnimatePresence>
+        {selectedProject && (
+          <ProjectModal 
+            project={selectedProject} 
+            onClose={() => setSelectedProject(null)} 
+            language={language}
+          />
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 };

@@ -160,7 +160,7 @@ const Hero = () => {
                 <div className="absolute inset-0 z-0 h-full w-[200%] translate-x-[-100%] bg-gradient-to-r from-transparent via-white/[0.08] to-transparent group-hover:animate-shimmer" />
                 <span className="relative z-10">{t.hero.ctaSecondary}</span>
               </motion.a>
-            </motion.div>
+             </motion.div>
           </motion.div>
         </div>
 
