@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { LanguageSwitcher } from "../atoms/LanguageSwitcher";
 import { styles } from "../../constants/styles";
 import { content } from "../../constants";
-import { logo, menu, close, github } from "../../assets";
+import { logo, menu, close } from "../../assets";
 import { config as configData } from "../../constants/config";
 import { useLanguage } from "../../context/LanguageContext";
 
@@ -30,10 +30,18 @@ const NavLink = ({ nav, active, setActive }: any) => {
   );
 };
 
+import { 
+  GithubIcon, 
+  LinkedInIcon, 
+  XIcon, 
+  InstagramIcon 
+} from "../atoms/SocialSidebar";
+
 const Navbar = () => {
   const { language } = useLanguage();
   const t = configData[language];
   const { navLinks } = content[language];
+  const { socials } = t.html;
 
   const [active, setActive] = useState<string | null>("");
   const [toggle, setToggle] = useState(false);
@@ -211,18 +219,30 @@ const Navbar = () => {
                     <p className="text-[11px] font-black uppercase tracking-[0.3em] text-[#915eff]">
                       {language === "tr" ? "Sosyal Medya" : "Social Connect"}
                     </p>
-                    <div className="flex gap-5">
+                    <div className="flex gap-4">
                       {/* Integrated Mobile Socials */}
-                      <a href={t.html.socials.github} target="_blank" rel="noreferrer" className="h-10 w-10 rounded-xl border border-white/10 bg-white/5 flex items-center justify-center transition-transform active:scale-90">
-                        <img src={github} alt="github" className="h-5 w-5 invert brightness-150" />
-                      </a>
-                      <a href={t.html.socials.linkedin} target="_blank" rel="noreferrer" className="h-10 w-10 rounded-xl border border-white/10 bg-white/5 flex items-center justify-center transition-transform active:scale-90">
-                        <div className="h-5 w-5 text-white/80">
-                          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                        </div>
-                      </a>
+                      {[
+                        { icon: <GithubIcon />, link: socials.github, label: "GitHub" },
+                        { icon: <LinkedInIcon />, link: socials.linkedin, label: "LinkedIn" },
+                        { icon: <XIcon />, link: socials.x, label: "X" },
+                        { icon: <InstagramIcon />, link: socials.instagram, label: "Instagram" },
+                      ].map((social, index) => (
+                        <a 
+                          key={index}
+                          href={social.link} 
+                          target="_blank" 
+                          rel="noreferrer" 
+                          className="group relative h-11 w-11 rounded-xl border border-white/10 bg-white/5 flex items-center justify-center transition-all duration-300 hover:border-[#915eff]/50 hover:bg-[#915eff]/10 active:scale-90"
+                        >
+                          <div className="text-white/70 group-hover:text-[#915eff] transition-colors relative z-10">
+                            {social.icon}
+                          </div>
+                          {/* Energy Glow on Hover */}
+                          <div className="absolute inset-x-2 -bottom-1 h-[2px] bg-[#915eff] opacity-0 blur-[1px] group-hover:opacity-100 transition-opacity" />
+                        </a>
+                      ))}
                     </div>
-                    <div className="mt-4 h-[2px] w-12 rounded-full bg-gradient-to-r from-[#915eff] to-cyan-400" />
+                    <div className="mt-4 h-[1px] w-12 rounded-full bg-gradient-to-r from-[#915eff] to-cyan-400 opacity-30" />
                   </div>
                 </motion.div>
               </>

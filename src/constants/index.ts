@@ -24,7 +24,7 @@ const tr: {
 } = {
   navLinks: [
     {
-      id: "about",
+      id: "",
       title: "Hakkımda",
     },
     {
@@ -40,12 +40,14 @@ const tr: {
     {
       title: "Yazılım Mühendisliği · 1. Sınıf",
       icon: bandirmaUniversity,
+      link: "https://www.bandirma.edu.tr/",
       description:
         "Bandırma Onyedi Eylül Üniversitesi Yazılım Mühendisliği’nde temel bilgisayar bilimi ve mühendislik disiplinini akademik çerçevede ilerletiyorum.",
     },
     {
       title: "Grafik Tasarım Koordinatörü",
       icon: banuyazilimToplulugu,
+      link: "https://yazilimmuhendisligi.com.tr",
       description:
         "BANÜ Yazılım Mühendisliği Topluluğu’nda etkinlik ve iletişim görsellerini üstlenerek markayı net, modern ve tutarlı tutuyorum.",
     },
@@ -55,6 +57,7 @@ const tr: {
       title: "Grafik Tasarım Koordinatörü",
       companyName: "BANÜ Yazılım Mühendisliği Topluluğu",
       icon: banuyazilimToplulugu,
+      link: "https://yazilimmuhendisligi.com.tr",
       iconBg: "linear-gradient(135deg, #0ea5e9 0%, #1e3a8a 100%)",
       date: "Aralık 2025 - Devam ediyor",
       points: [
@@ -100,7 +103,7 @@ const en: {
 } = {
   navLinks: [
     {
-      id: "about",
+      id: "",
       title: "About",
     },
     {
@@ -116,12 +119,14 @@ const en: {
     {
       title: "Software Eng. · 1st Year",
       icon: bandirmaUniversity,
+      link: "https://www.bandirma.edu.tr/",
       description:
         "Advancing my fundamentals in computer science and engineering disciplines within the academic framework of Bandırma Onyedi Eylül University.",
     },
     {
       title: "Graphic Design Coordinator",
       icon: banuyazilimToplulugu,
+      link: "https://yazilimmuhendisligi.com.tr",
       description:
         "Overseeing event and communication visuals at BANÜ Software Engineering Society to maintain a clear, modern, and consistent brand voice.",
     },
@@ -131,6 +136,7 @@ const en: {
       title: "Graphic Design Coordinator",
       companyName: "BANÜ Software Engineering Society",
       icon: banuyazilimToplulugu,
+      link: "https://yazilimmuhendisligi.com.tr",
       iconBg: "linear-gradient(135deg, #0ea5e9 0%, #1e3a8a 100%)",
       date: "December 2025 - Present",
       points: [

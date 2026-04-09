@@ -13,6 +13,7 @@ import Experience from "./sections/Experience";
 import Works from "./sections/Works";
 import Insights from "./sections/Insights";
 import Contact from "./sections/Contact";
+import Footer from "./sections/Footer";
 import BackToTop from "./atoms/BackToTop";
 import CanvasLoader from "./layout/Loader";
 import ProjectModal from "./molecules/ProjectModal";
@@ -27,6 +28,7 @@ export {
   Works,
   Insights,
   Contact,
+  Footer,
   BackToTop,
   CanvasLoader,
   ProjectModal,

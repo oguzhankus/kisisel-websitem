@@ -20,6 +20,7 @@ const ExperienceCard: React.FC<TExperience> = ({
   icon,
   date,
   points,
+  link,
 }) => {
   return (
     <VerticalTimelineElement
@@ -45,25 +46,53 @@ const ExperienceCard: React.FC<TExperience> = ({
         overflow: "visible",
       }}
       icon={
-        <div className="relative flex h-full w-full items-center justify-center pointer-events-none">
-          {/* Reverted Hitech Energy Ring - Optimized for non-clipping */}
-          <div className="absolute inset-[1px] rounded-full border border-cyan-400/30 shadow-[0_0_15px_rgba(34,211,238,0.3)] animate-pulse" />
-          <div className="absolute inset-[-2px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700">
-             <div className="absolute inset-0 rounded-full border border-[#915eff]/30 animate-spin-slow" style={{ animationDuration: '3s' }} />
-          </div>
+        link ? (
+          <a
+            href={link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="relative flex h-full w-full items-center justify-center cursor-pointer group/icon"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Reverted Hitech Energy Ring - Optimized for non-clipping */}
+            <div className="absolute inset-[1px] rounded-full border border-cyan-400/30 shadow-[0_0_15px_rgba(34,211,238,0.3)] animate-pulse group-hover/icon:border-cyan-400 group-hover/icon:shadow-[0_0_25px_rgba(34,211,238,0.6)]" />
+            <div className="absolute inset-[-2px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+               <div className="absolute inset-0 rounded-full border border-[#915eff]/30 animate-spin-slow" style={{ animationDuration: '3s' }} />
+            </div>
 
-          <div className="relative z-10 flex h-full w-full items-center justify-center p-2">
-            <img
-              src={icon}
-              alt={companyName}
-              className="h-full w-full object-contain rounded-full brightness-125 transition-all duration-500 group-hover:scale-110"
-              style={{ 
-                mixBlendMode: 'lighten',
-                filter: 'contrast(1.2) brightness(1.3) drop-shadow(0 0 10px rgba(145,94,255,0.6))' 
-              }}
-            />
+            <div className="relative z-10 flex h-full w-full items-center justify-center p-2 transition-transform duration-500 group-hover/icon:scale-110">
+              <img
+                src={icon}
+                alt={companyName}
+                className="h-full w-full object-contain rounded-full brightness-125 transition-all duration-500"
+                style={{ 
+                  mixBlendMode: 'lighten',
+                  filter: 'contrast(1.2) brightness(1.3) drop-shadow(0 0 10px rgba(145,94,255,0.6))' 
+                }}
+              />
+            </div>
+          </a>
+        ) : (
+          <div className="relative flex h-full w-full items-center justify-center pointer-events-none">
+            {/* Reverted Hitech Energy Ring - Optimized for non-clipping */}
+            <div className="absolute inset-[1px] rounded-full border border-cyan-400/30 shadow-[0_0_15px_rgba(34,211,238,0.3)] animate-pulse" />
+            <div className="absolute inset-[-2px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+               <div className="absolute inset-0 rounded-full border border-[#915eff]/30 animate-spin-slow" style={{ animationDuration: '3s' }} />
+            </div>
+
+            <div className="relative z-10 flex h-full w-full items-center justify-center p-2">
+              <img
+                src={icon}
+                alt={companyName}
+                className="h-full w-full object-contain rounded-full brightness-125 transition-all duration-500"
+                style={{ 
+                  mixBlendMode: 'lighten',
+                  filter: 'contrast(1.2) brightness(1.3) drop-shadow(0 0 10px rgba(145,94,255,0.6))' 
+                }}
+              />
+            </div>
           </div>
-        </div>
+        )
       }
     >
       {/* HUD Markers */}

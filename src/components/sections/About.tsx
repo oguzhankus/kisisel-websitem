@@ -15,9 +15,10 @@ interface IServiceCard {
   title: string;
   icon: string;
   description: string;
+  link?: string;
 }
 
-const ServiceCard: React.FC<IServiceCard> = ({ index, title, icon, description }) => {
+const ServiceCard: React.FC<IServiceCard> = ({ index, title, icon, description, link }) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -63,22 +64,51 @@ const ServiceCard: React.FC<IServiceCard> = ({ index, title, icon, description }
           {/* Persistent Holographic Edge Top */}
           <div className="pointer-events-none absolute -top-[1px] left-[15%] h-[1px] w-[70%] bg-gradient-to-r from-transparent via-cyan-400/30 to-transparent transition-all duration-500 group-hover:via-cyan-400 group-hover:w-[80%]" />
 
-          <div
-            className="relative z-10 mt-2 flex h-20 w-20 items-center justify-center rounded-2xl border border-white/10 bg-transparent shadow-[0_8px_32px_rgba(0,0,0,0.2)] transition-all duration-500 group-hover:scale-110 group-hover:border-[#915eff]/30 p-2"
-            style={{ transform: "translateZ(45px)" }}
-          >
-            <img
-              src={icon}
-              alt={title}
-              className="h-full w-full object-contain rounded-full drop-shadow-[0_0_15px_rgba(145,94,255,0.4)] transition-all duration-500 group-hover:scale-110 group-hover:drop-shadow-[0_0_20px_rgba(145,94,255,0.6)]"
-              style={{ mixBlendMode: 'lighten', filter: 'brightness(1.3) contrast(1.1)' }}
-            />
-            <div className="absolute -bottom-2 h-[2px] w-10 bg-[#915eff] blur-[4px] opacity-0 group-hover:opacity-100 transition-opacity" />
-          </div>
+          {link ? (
+            <a
+              href={link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex flex-col items-center group/link w-full"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div
+                className="relative z-10 mt-2 flex h-20 w-20 items-center justify-center rounded-2xl border border-white/10 bg-transparent shadow-[0_8px_32px_rgba(0,0,0,0.2)] transition-all duration-500 p-2 cursor-pointer group-hover/link:scale-110 group-hover/link:border-[#915eff]/50 group-hover/link:shadow-[0_0_25px_rgba(145,94,255,0.4)]"
+                style={{ transform: "translateZ(45px)" }}
+              >
+                <img
+                  src={icon}
+                  alt={title}
+                  className="h-full w-full object-contain rounded-full drop-shadow-[0_0_15px_rgba(145,94,255,0.4)] transition-all duration-500 group-hover/link:scale-110 group-hover/link:drop-shadow-[0_0_20px_rgba(145,94,255,0.6)]"
+                  style={{ mixBlendMode: 'lighten', filter: 'brightness(1.3) contrast(1.1)' }}
+                />
+                <div className="absolute -bottom-2 h-[2px] w-10 bg-[#915eff] blur-[4px] opacity-0 group-hover/link:opacity-100 transition-opacity" />
+              </div>
 
-          <h3 className="mt-8 text-center text-[19px] font-black leading-tight text-white group-hover:text-cyan-400 transition-colors" style={{ transform: "translateZ(35px)" }}>
-            {title}
-          </h3>
+              <h3 className="mt-8 text-center text-[19px] font-black leading-tight text-white group-hover/link:text-cyan-400 transition-colors" style={{ transform: "translateZ(35px)" }}>
+                {title}
+              </h3>
+            </a>
+          ) : (
+            <>
+              <div
+                className="relative z-10 mt-2 flex h-20 w-20 items-center justify-center rounded-2xl border border-white/10 bg-transparent shadow-[0_8px_32px_rgba(0,0,0,0.2)] transition-all duration-500 group-hover:scale-110 group-hover:border-[#915eff]/30 p-2"
+                style={{ transform: "translateZ(45px)" }}
+              >
+                <img
+                  src={icon}
+                  alt={title}
+                  className="h-full w-full object-contain rounded-full drop-shadow-[0_0_15px_rgba(145,94,255,0.4)] transition-all duration-500 group-hover:scale-110 group-hover:drop-shadow-[0_0_20px_rgba(145,94,255,0.6)]"
+                  style={{ mixBlendMode: 'lighten', filter: 'brightness(1.3) contrast(1.1)' }}
+                />
+                <div className="absolute -bottom-2 h-[2px] w-10 bg-[#915eff] blur-[4px] opacity-0 group-hover:opacity-100 transition-opacity" />
+              </div>
+
+              <h3 className="mt-8 text-center text-[19px] font-black leading-tight text-white group-hover:text-cyan-400 transition-colors" style={{ transform: "translateZ(35px)" }}>
+                {title}
+              </h3>
+            </>
+          )}
 
           <p className="mt-5 text-center text-[13px] leading-6 text-secondary opacity-70 group-hover:opacity-100 transition-opacity" style={{ transform: "translateZ(25px)" }}>
             {description}

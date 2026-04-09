@@ -13,40 +13,17 @@ const SectionWrapper = (
   idName: Props["idName"]
 ) =>
   function HOC() {
-
     const ref = useRef<HTMLElement>(null);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     return (
       <motion.section
         ref={ref}
-
-
-
-
-
-
-
         className={`${styles.padding} relative z-0 mx-auto max-w-7xl`}
         style={{ 
           contain: "paint layout",
           contentVisibility: "auto",
           minHeight: "400px" 
         }}
-        id={idName}
       >
         {/* Technical Viewfinders - Lightweight Visual Details */}
         <div className="absolute left-6 top-6 h-4 w-4 border-l-2 border-t-2 border-[#915eff40]" />

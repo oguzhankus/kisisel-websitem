@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { config } from "../../constants/config";
 import { useLanguage } from "../../context/LanguageContext";
 
-const LinkedInIcon = () => (
+export const LinkedInIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -14,7 +14,7 @@ const LinkedInIcon = () => (
   </svg>
 );
 
-const InstagramIcon = () => (
+export const InstagramIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -31,7 +31,7 @@ const InstagramIcon = () => (
   </svg>
 );
 
-const XIcon = () => (
+export const XIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -42,7 +42,7 @@ const XIcon = () => (
   </svg>
 );
 
-const GithubIcon = () => (
+export const GithubIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -83,7 +83,7 @@ export const SocialSidebar = () => {
   const { socials } = config[language].html;
 
   return (
-    <div className="fixed bottom-8 left-1/2 z-[60] -translate-x-1/2 flex flex-row items-center justify-center gap-4 rounded-[24px] border border-white/10 bg-[#050510]/80 px-6 py-3 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5),inset_0_0_20px_rgba(145,94,255,0.05)] backdrop-blur-xl md:bottom-auto md:left-10 md:top-1/2 md:w-auto md:-translate-y-1/2 md:flex-col md:justify-center md:gap-5 md:border-transparent md:bg-transparent md:p-0 md:backdrop-blur-none transition-all duration-300">
+    <div className="fixed bottom-8 left-1/2 z-[60] -translate-x-1/2 flex flex-row items-center justify-center gap-4 rounded-[24px] border border-white/10 bg-[#050510]/80 px-6 py-3 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5),inset_0_0_20px_rgba(145,94,255,0.05)] backdrop-blur-xl md:bottom-auto md:left-10 md:top-[calc(50%+28px)] md:w-auto md:-translate-y-1/2 md:flex-col md:justify-center md:gap-5 md:border-transparent md:bg-transparent md:p-0 md:backdrop-blur-none transition-all duration-300">
       {/* Decorative vertical line (Desktop) - Enhanced Neon Spine */}
       <div className="absolute -left-1 top-[-100%] bottom-[-100%] w-px bg-gradient-to-b from-transparent via-[#915eff]/40 to-transparent hidden md:block">
         <div className="absolute top-1/2 left-1/2 h-24 w-[2px] -translate-x-1/2 -translate-y-1/2 bg-[#915eff] blur-[2px] opacity-60" />
